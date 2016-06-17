@@ -1,2 +1,2 @@
-# SmartHome
+# SmartHome [![Build Status](https://travis-ci.org/ArnaudFlaesch/SmartHome.svg?branch=master)](https://travis-ci.org/ArnaudFlaesch/SmartHome)
 Projet ESGI 4AAL - Gestion et affichage des courbes de données (température, humidité, CO²...) d'une maison.
