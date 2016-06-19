@@ -3,10 +3,60 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:SmartHome"
-        mc:Ignorable="d"
-        Title="SmartHome" Height="350" Width="525">
-    <Grid>
+        xmlns:local="clr-namespace:SmartHome" xmlns:oxy="http://oxyplot.org/wpf"
+        mc:Ignorable="d" Title="{Binding NameApp}" WindowState="Maximized">
+    <Grid Name="MainGrid">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*" />
+            <ColumnDefinition Width="7*" />
+            <ColumnDefinition Width="2*" />
+        </Grid.ColumnDefinitions>
         
+        <Grid Name="LeftGrid">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <ListView ItemsSource="{Binding listLocations}" Grid.Row="1">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid>
+                            <Button Content="{Binding name}" Click="clickOnLocationButton"/>
+                        </Grid>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </Grid>
+
+        <oxy:PlotView x:Name="PlotGraph" Grid.Column="1" Model="{Binding oxyplotgraph}"/>
+
+        <Grid Name="RightGrid" Grid.Column="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <ListView ItemsSource="{Binding listLocations}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="1*" />
+                                <RowDefinition Height="9*" />
+                            </Grid.RowDefinitions>
+                            <Label Content="{Binding name}"/>
+                            <ListView ItemsSource="{Binding listCapteur}" Grid.Row="1">
+                                <ListView.ItemTemplate>
+                                    <DataTemplate>
+                                        <Grid>
+                                            <CheckBox Content="{Binding description}" Checked="checkCaptor" Unchecked="unCheckCaptor"/>
+                                        </Grid>
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+                            </ListView>
+                        </Grid>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </Grid>
     </Grid>
 </Window>

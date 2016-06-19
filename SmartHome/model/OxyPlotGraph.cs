@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SmartHome
 {
-    class OxyPlotGraph
+    public class OxyPlotGraph
     {
     }
 }

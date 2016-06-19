@@ -6,7 +6,26 @@ using System.Threading.Tasks;
 
 namespace SmartHome
 {
-    class MainViewModel
+    public class MainViewModel
     {
+        public String NameApp
+        {
+            get; set;
+        }
+
+        public List<Lieu> listLocations
+        {
+            get; set;
+        }
+
+        public OxyPlotGraph oxyplotgraph
+        {
+            get; set;
+        }
+
+        public MainViewModel()
+        {
+            this.NameApp = "SmartHome";
+        }
     }
 }
