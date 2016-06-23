@@ -6,27 +6,31 @@ using System.Threading.Tasks;
 
 namespace SmartHome
 {
-    public class Capteur
+    //Classe portant les capteurs parsé dans CapteurParseur.
+    class Capteur
     {
-        public String id
-        {
-            get; set;
-        }
-
-        public String description
-        {
-            get; set;
-        }
-
-        public List<Mesure> listMesures
-        {
-            get; set;
-        }
-
-        public Capteur(String id, String description)
+        public string id { get; set; }
+        public string description { get; set; }
+        public string lieu { get; set; }
+        public string unite { get; set; }
+        List<Mesure> mesures;
+        public Capteur(string id, string description, string lieu, string unite)
         {
             this.id = id;
             this.description = description;
+            this.lieu = lieu;
+            this.unite = unite;
+            this.mesures = new List<Mesure>();
         }
+
+        public void addMesure(Mesure mesure)
+        {
+            this.mesures.Add(mesure);
+        }
+        public List<Mesure> getMesures()
+        {
+            return this.mesures;
+        }
+
     }
 }

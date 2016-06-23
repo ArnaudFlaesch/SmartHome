@@ -6,22 +6,19 @@ using System.Threading.Tasks;
 
 namespace SmartHome
 {
-    public class Mesure
+    class Mesure
     {
-        public DateTime date
+        public double value { get; set; }
+        public DateTime date { get; set; }
+
+        public Mesure(string value, string date)
         {
-            get; set;
+            this.value = Convert.ToDouble(value);
+            date = date.Trim('"');
+            this.date = DateTime.Parse(date);
+
+            //Console.WriteLine("Date Parsing : " + date + " --> " + this.date);
         }
 
-        public Double value
-        {
-            get; set;
-        }
-
-        public Mesure(DateTime date, Double value)
-        {
-            this.date = date;
-            this.value = value;
-        }
     }
 }

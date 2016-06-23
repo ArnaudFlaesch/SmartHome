@@ -8,7 +8,7 @@ namespace SmartHome
 {
     public class Lieu
     {
-        public Lieu(int id, String name)
+  /*      public Lieu(int id, String name)
         {
             this.id = id;
             this.name = name;
@@ -28,6 +28,6 @@ namespace SmartHome
         public List<Capteur> listCapteur
         {
             get; set;
-        }
+        }*/
     }
 }

@@ -27,8 +27,11 @@ namespace SmartHome
 
         public MainWindow()
         {
-            //model = ;
-            this.DataContext = new MainViewModel();
+
+            NetatmoData nd = new NetatmoData("../../capteurs.xtim", "../../netatmo", false); // parse tous les fichiers dispo, false/true = pour les logs
+            Dictionary<string, Capteur> qzd = nd.getNoEmptyCapteur(false); // Récupère un dictionnaire avec seulement les capteurs contenant des mesures
+            nd.getNoEmptyCapteur(true); // renplace le dico interne a nd avec un dico sans capteurs vides
+            Console.WriteLine("Première mesure : " + nd.start + "  -  Dernière mesure : " + nd.end);
            
             InitializeComponent();
 
