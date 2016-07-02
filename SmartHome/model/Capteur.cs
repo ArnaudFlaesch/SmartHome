@@ -32,5 +32,10 @@ namespace SmartHome
             return this.mesures;
         }
 
+        public void setMesures(List<Mesure> list)
+        {
+            this.mesures = list;
+        }
+
     }
 }

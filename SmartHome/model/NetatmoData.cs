@@ -23,6 +23,29 @@ namespace SmartHome
             MesureParseur(pathMesure);
         }
 
+        public Dictionary<string, Capteur> getTimeLapsDico(DateTime begin, DateTime end)
+        {
+            var timeLaps = capteursList;
+            foreach(KeyValuePair<string, Capteur> capteur in timeLaps)
+            {
+                var listMesure = capteur.Value.getMesures();
+                List<Mesure> tmpList = new List<Mesure>(); ;
+                DateTime dateTmp;
+                foreach (var mesure in listMesure)
+                {
+                    
+                    dateTmp = mesure.date;
+                    if (dateTmp.CompareTo(begin) < 0 || dateTmp.CompareTo(end) > 0)
+                    {
+                        Console.WriteLine("Date Entre deux " + dateTmp.CompareTo(begin));
+                        tmpList.Add(mesure);
+                    }
+                }
+
+                capteur.Value.setMesures(tmpList);
+            }
+            return timeLaps;
+        }
         private void MesureParseur(string path)
         {
             if (debug)
