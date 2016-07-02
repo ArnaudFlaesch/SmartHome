@@ -32,8 +32,10 @@ namespace SmartHome
             Dictionary<string, Capteur> qzd = nd.getNoEmptyCapteur(false); // Récupère un dictionnaire avec seulement les capteurs contenant des mesures
             nd.getNoEmptyCapteur(true); // renplace le dico interne a nd avec un dico sans capteurs vides
             Console.WriteLine("Première mesure : " + nd.start + "  -  Dernière mesure : " + nd.end);
+            
+            var tmp = nd.getTimeLapsDico(new DateTime(2014,2,1,0,23,14), new DateTime(2014, 2, 1, 2, 23, 14));
 
-            nd.getTimeLapsDico(, DateTime.Now);
+
             InitializeComponent();
 
             this.LeftGrid.Children.Add(createCalendar(new DateTime(2015, 1, 18), new DateTime(2015, 1, 25)));

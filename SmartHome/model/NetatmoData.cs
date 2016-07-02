@@ -33,11 +33,10 @@ namespace SmartHome
                 DateTime dateTmp;
                 foreach (var mesure in listMesure)
                 {
-                    
                     dateTmp = mesure.date;
-                    if (dateTmp.CompareTo(begin) < 0 || dateTmp.CompareTo(end) > 0)
+                    if (dateTmp.CompareTo(begin) > 0 && dateTmp.CompareTo(end) < 0)
                     {
-                        Console.WriteLine("Date Entre deux " + dateTmp.CompareTo(begin));
+                        //Console.WriteLine("Date Entre deux " + dateTmp.CompareTo(begin));
                         tmpList.Add(mesure);
                     }
                 }
