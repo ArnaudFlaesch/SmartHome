@@ -8,32 +8,26 @@ using System.Xml;
 
 namespace SmartHome
 {
-    class NetatmoData
+    public class NetatmoData
     {
+        private static String pathToXmlFile = "../../capteurs.xtim";
+        private static String pathToDataFolder = "../../netatmo";
+
         Dictionary<string, Capteur> capteursList { get; set; }
-        Boolean debug;
         public DateTime start { get; set; }
         public DateTime end { get; set; }
 
-        public NetatmoData(string pathCapteurs, string pathMesure, Boolean debug)
+        public NetatmoData()
         {
-            this.debug = debug;
             capteursList = new Dictionary<string, Capteur>();
-            CapteurParseur(pathCapteurs);
-            MesureParseur(pathMesure);
+            CapteurParseur(pathToXmlFile);
+            MesureParseur(pathToDataFolder);
         }
 
         private void MesureParseur(string path)
         {
-            if (debug)
-            {
-                Console.WriteLine("--------------- MESURES -------------------");
-            }
-
             foreach (string file in Directory.GetFiles(@path))
             {
-                if (debug)
-                    Console.WriteLine("Fichier de mesure : " + file);
                 foreach (string line in File.ReadLines(file))
                 {
                     string[] splitLine = line.Split(' ');
@@ -51,21 +45,15 @@ namespace SmartHome
                             end = tmpDT;
                         }
                     }
-
-
                 }
-
             }
-            if (debug)
-                Console.WriteLine("---------------------------------------");
         }
 
         private void CapteurParseur(String path)
         {
             XmlDocument xmlDoc = new XmlDocument();
             xmlDoc.Load(path);
-            if (debug)
-                Console.WriteLine("------------ CAPTEURS ------------------");
+
             XmlNodeList xnList = xmlDoc.SelectNodes("/capteurs/capteur");
             foreach (XmlNode xn in xnList)
             {
@@ -77,13 +65,8 @@ namespace SmartHome
                     string unite = xn["grandeur"].Attributes["abreviation"].Value;
 
                     capteursList.Add(id, new Capteur(id, description, place, unite));
-
-                    if (debug)
-                        Console.WriteLine("Capteur : {0} || {1} || {2} || {3}", id, description, place, xn["grandeur"].Attributes["abreviation"].Value);
                 }
             }
-            if (debug)
-                Console.WriteLine("---------------------------------------");
         }
 
         public Dictionary<string, Capteur> getNoEmptyCapteur(bool replace)
@@ -105,7 +88,17 @@ namespace SmartHome
             {
                 return noEmptyCapteur;
             }
+        }
 
+        public void displayIdCapteurs(string lieu)
+        {
+            foreach(KeyValuePair<string, Capteur> capteur in capteursList)
+            {
+                if (capteur.Value.lieu.Equals(lieu))
+                {
+                    Console.WriteLine(capteur.Value.description);
+                }
+            }
         }
 
     }

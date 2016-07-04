@@ -15,56 +15,68 @@ using System.Windows.Shapes;
 
 namespace SmartHome
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
+
     public partial class MainWindow : Window
     {
-        /*public MainViewModel model
+        public MainViewModel model
         {
             get; set;
-        }*/
+        }
 
         public MainWindow()
         {
-
-            NetatmoData nd = new NetatmoData("../../capteurs.xtim", "../../netatmo", false); // parse tous les fichiers dispo, false/true = pour les logs
-            Dictionary<string, Capteur> qzd = nd.getNoEmptyCapteur(false); // Récupère un dictionnaire avec seulement les capteurs contenant des mesures
-            nd.getNoEmptyCapteur(true); // renplace le dico interne a nd avec un dico sans capteurs vides
-            Console.WriteLine("Première mesure : " + nd.start + "  -  Dernière mesure : " + nd.end);
-           
+            this.model = new MainViewModel();
+            this.DataContext = model;
             InitializeComponent();
-
-            this.LeftGrid.Children.Add(createCalendar(new DateTime(2015, 1, 18), new DateTime(2015, 1, 25)));
+            this.initLocationButtons();
         }
 
-
-        private Calendar createCalendar(DateTime start, DateTime end)
+        public void initLocationButtons()
         {
-            /*
-            calendar.SetBinding(Calendar.DisplayDateProperty, new Binding()
-                {
-                    Path = new PropertyPath("selectedDate"),
-                    Source = calendar.SelectedDate
-                });
-            */
+            int row = 0, column = 0;
+            int maxRows = model.listLocations.Count / 3;
+            int remainingButtons = model.listLocations.Count % 3;
+            if (remainingButtons != 0)
+            {
+                maxRows++;
+            }
+            
+            for (int i = 0; i<maxRows; i++)
+            {
+                BottomGrid.RowDefinitions.Add(new RowDefinition());
+            }
 
-            Calendar calendar = new Calendar();
-            calendar.DisplayDate = start;
-            calendar.DisplayDateStart = start;
-            calendar.DisplayDateEnd = end;
-            calendar.SelectedDatesChanged += dateHasChanged;
-            return (calendar);
+            foreach (Lieu lieu in model.listLocations)
+            {
+                Button locationButton = new Button();
+                locationButton.Content = lieu.name;
+                Grid.SetColumn(locationButton, column);
+                Grid.SetRow(locationButton, row);
+                locationButton.Click += clickOnLocationButton;
+                
+                if (row == maxRows - 1 && remainingButtons == 1)
+                {
+                    Grid.SetColumnSpan(locationButton, 3);
+                }
+                BottomGrid.Children.Add(locationButton);
+                row = (column == 2) ? row+=1 : row;
+                column = (column == 2) ? column = 0 : column+=1;
+            }
         }
+
+
+        /* EVENTS */
 
         private void dateHasChanged(object sender, SelectionChangedEventArgs e)
         {
             DateTime selectedDate = (DateTime)((Calendar)sender).SelectedDate;
+            Console.WriteLine(selectedDate);
         }
 
         private void clickOnLocationButton(object sender, RoutedEventArgs e)
         {
-            Console.WriteLine("Bouton de lieu cliqué");
+            String locationName = ((Button)sender).Content.ToString();
+            this.model.dataCapteurs.displayIdCapteurs(locationName);
         }
 
         private void checkCaptor(object sender, RoutedEventArgs e)
