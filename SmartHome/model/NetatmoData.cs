@@ -21,18 +21,46 @@ namespace SmartHome
         public NetatmoData()
         {
             capteursDico = new Dictionary<string, Capteur>();
-
             locationList = CapteurParseur(pathToXmlFile);
             MesureParseur(pathToDataFolder);
             capteursDico = getNoEmptyCapteur();
+        }
+
+
+  /*      public Dictionary<string, Mesure> timeLaps(Dictionary<string, Capteur> dico, TimeSpan interval, TimeSpan deltaTime, int numIteration)
+        {
+            DateTime snapDate = DateTime.Now;
+
+            foreach (KeyValuePair<string, Capteur> capteur in dico)
+            {
+                if (snapDate.CompareTo(capteur.Value.getMesures()[0].date) < 0)
+                    snapDate = capteur.Value.getMesures()[0].date;
+            }
+
+            var snapShotDico = new Dictionary<string, Mesure>();
+            foreach (KeyValuePair<string, Capteur> capteur in dico)
+            {
+                if (dateTmp.CompareTo(begin) > 0 && dateTmp.CompareTo(end) < 0)
+                {
+
+                }
+            }
+
+            return snapShotDico;
+        }*/
+
+
         public Dictionary<string, Capteur> getTimeLapsDico(DateTime begin, DateTime end)
         {
-            var timeLaps = capteursList;
-            foreach(KeyValuePair<string, Capteur> capteur in timeLaps)
+            Dictionary<string, Capteur> timeLaps = new Dictionary<string, Capteur>();
+            foreach (KeyValuePair<string, Capteur> capteur in capteursDico)
             {
                 var listMesure = capteur.Value.getMesures();
+                var newCapteur = new Capteur(capteur.Value);
+                timeLaps.Add(capteur.Value.id, newCapteur);
                 List<Mesure> tmpList = new List<Mesure>(); ;
                 DateTime dateTmp;
+
                 foreach (var mesure in listMesure)
                 {
                     dateTmp = mesure.date;
@@ -43,29 +71,9 @@ namespace SmartHome
                     }
                 }
 
-                capteur.Value.setMesures(tmpList);
+                newCapteur.setMesures(tmpList);
             }
             return timeLaps;
-        }
-        private void MesureParseur(string path)
-        {
-            if (debug)
-            {
-                Console.WriteLine("--------------- MESURES -------------------");
-            }
-
-            foreach (KeyValuePair<string, Capteur> capteur in capteursDico)
-            {
-                foreach (Lieu lieu in locationList)
-                {
-                    if (lieu.name.Equals(capteur.Value.lieu))
-                    {
-                        lieu.capteurList.Add(capteur.Value);
-                        break;
-                    }
-                }
-            }
-            capteursDico = null;
         }
 
         private List<Lieu> CapteurParseur(String path)

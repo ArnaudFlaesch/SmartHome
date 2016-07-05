@@ -18,5 +18,11 @@ namespace SmartHome
             this.date = DateTime.Parse(date);
         }
 
+        public Mesure(Mesure mesure)
+        {
+            this.value = mesure.value;
+            this.date = mesure.date;
+        }
+
     }
 }

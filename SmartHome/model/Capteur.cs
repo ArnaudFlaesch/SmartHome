@@ -35,8 +35,16 @@ namespace SmartHome
 
         public void setMesures(List<Mesure> list)
         {
-            this.mesures = list;
+            this.mesureList = list;
         }
 
+        public Capteur(Capteur capteur)
+        {
+            this.id = capteur.id;
+            this.description = capteur.description;
+            this.lieu = capteur.lieu;
+            this.unite = capteur.unite;
+            //this.mesures = new List<Mesure>(capteur.mesures);
+        }
     }
 }
