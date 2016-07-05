@@ -22,8 +22,7 @@ namespace SmartHome
         {
             capteursDico = new Dictionary<string, Capteur>();
 
-            locationList = parseLocationsFromXml(pathToXmlFile);
-            CapteurParseur(pathToXmlFile);
+            locationList = CapteurParseur(pathToXmlFile);
             MesureParseur(pathToDataFolder);
             capteursDico = getNoEmptyCapteur();
 
@@ -41,27 +40,9 @@ namespace SmartHome
             capteursDico = null;
         }
 
-        private List<Lieu> parseLocationsFromXml(string path)
+        private List<Lieu> CapteurParseur(String path)
         {
             List<Lieu> listLocations = new List<Lieu>();
-
-            XmlDocument doc = new XmlDocument();
-            doc.Load(path);
-            XmlNodeList capteursListXML = doc.SelectSingleNode("capteurs").ChildNodes;
-
-            for (int i = 0; i < capteursListXML.Count; i++)
-            {
-                XmlNode capteur = capteursListXML[i];
-                if (!listLocations.Contains(new Lieu() { name = capteur.SelectSingleNode("lieu").InnerXml }))
-                {
-                    listLocations.Add(new Lieu() { name = capteur.SelectSingleNode("lieu").InnerXml });
-                }
-            }
-            return (listLocations);
-        }
-
-        private void CapteurParseur(String path)
-        {
             XmlDocument xmlDoc = new XmlDocument();
             xmlDoc.Load(path);
 
@@ -75,9 +56,15 @@ namespace SmartHome
                     string place = xn["lieu"].InnerText;
                     string unite = xn["grandeur"].Attributes["abreviation"].Value;
 
+                    if (!listLocations.Contains(new Lieu() { name = place }))
+                    {
+                        listLocations.Add(new Lieu() { name = place });
+                    }
+
                     capteursDico.Add(id, new Capteur(id, description, place, unite));
                 }
             }
+            return (listLocations);
         }
 
         private void MesureParseur(string path)
