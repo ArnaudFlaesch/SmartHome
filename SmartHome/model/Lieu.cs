@@ -6,28 +6,21 @@ using System.Threading.Tasks;
 
 namespace SmartHome
 {
-    public class Lieu
+    public class Lieu : IEquatable<Lieu>
     {
-  /*      public Lieu(int id, String name)
+        public int id { get; set; }
+        public String name { get; set; }
+        public List<Capteur> capteurList{ get; set; }
+
+        public Lieu()
         {
-            this.id = id;
-            this.name = name;
-            this.listCapteur = new List<Capteur>();
+            this.capteurList = new List<Capteur>();
         }
 
-        public int id
+        public bool Equals(Lieu other)
         {
-            get; set;
+            if (other == null) return false;
+            return (this.name.Equals(other.name));
         }
-
-        public String name
-        {
-            get; set;
-        }
-
-        public List<Capteur> listCapteur
-        {
-            get; set;
-        }*/
     }
 }

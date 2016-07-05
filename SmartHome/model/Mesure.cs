@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SmartHome
 {
-    class Mesure
+    public class Mesure
     {
         public double value { get; set; }
         public DateTime date { get; set; }
@@ -16,8 +16,6 @@ namespace SmartHome
             this.value = Convert.ToDouble(value);
             date = date.Trim('"');
             this.date = DateTime.Parse(date);
-
-            //Console.WriteLine("Date Parsing : " + date + " --> " + this.date);
         }
 
     }

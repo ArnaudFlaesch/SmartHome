@@ -8,21 +8,23 @@ using System.Xml;
 
 namespace SmartHome
 {
-    class NetatmoData
+    public class NetatmoData
     {
-        Dictionary<string, Capteur> capteursList { get; set; }
-        Boolean debug;
+        private string pathToXmlFile = "../../capteurs.xtim";
+        private string pathToDataFolder = "../../netatmo";
+
+        public List<Lieu> locationList { get; set; }
+        public Dictionary<string, Capteur> capteursDico { get; set; }
         public DateTime start { get; set; }
         public DateTime end { get; set; }
 
-        public NetatmoData(string pathCapteurs, string pathMesure, Boolean debug)
+        public NetatmoData()
         {
-            this.debug = debug;
-            capteursList = new Dictionary<string, Capteur>();
-            CapteurParseur(pathCapteurs);
-            MesureParseur(pathMesure);
-        }
+            capteursDico = new Dictionary<string, Capteur>();
 
+            locationList = CapteurParseur(pathToXmlFile);
+            MesureParseur(pathToDataFolder);
+            capteursDico = getNoEmptyCapteur();
         public Dictionary<string, Capteur> getTimeLapsDico(DateTime begin, DateTime end)
         {
             var timeLaps = capteursList;
@@ -52,42 +54,26 @@ namespace SmartHome
                 Console.WriteLine("--------------- MESURES -------------------");
             }
 
-            foreach (string file in Directory.GetFiles(@path))
+            foreach (KeyValuePair<string, Capteur> capteur in capteursDico)
             {
-                if (debug)
-                    Console.WriteLine("Fichier de mesure : " + file);
-                foreach (string line in File.ReadLines(file))
+                foreach (Lieu lieu in locationList)
                 {
-                    string[] splitLine = line.Split(' ');
-                    if (capteursList.ContainsKey(splitLine[2]))
+                    if (lieu.name.Equals(capteur.Value.lieu))
                     {
-                        capteursList[splitLine[2]].
-                           addMesure(new Mesure(splitLine[3], splitLine[0] + " " + splitLine[1]));
-                        DateTime tmpDT = capteursList[splitLine[2]].getMesures()[capteursList[splitLine[2]].getMesures().Count - 1].date;
-                        if (DateTime.Compare(start, tmpDT) > 0 || start == default(DateTime))
-                        {
-                            start = tmpDT;
-                        }
-                        else if (DateTime.Compare(end, tmpDT) < 0)
-                        {
-                            end = tmpDT;
-                        }
+                        lieu.capteurList.Add(capteur.Value);
+                        break;
                     }
-
-
                 }
-
             }
-            if (debug)
-                Console.WriteLine("---------------------------------------");
+            capteursDico = null;
         }
 
-        private void CapteurParseur(String path)
+        private List<Lieu> CapteurParseur(String path)
         {
+            List<Lieu> listLocations = new List<Lieu>();
             XmlDocument xmlDoc = new XmlDocument();
             xmlDoc.Load(path);
-            if (debug)
-                Console.WriteLine("------------ CAPTEURS ------------------");
+
             XmlNodeList xnList = xmlDoc.SelectNodes("/capteurs/capteur");
             foreach (XmlNode xn in xnList)
             {
@@ -98,38 +84,52 @@ namespace SmartHome
                     string place = xn["lieu"].InnerText;
                     string unite = xn["grandeur"].Attributes["abreviation"].Value;
 
-                    capteursList.Add(id, new Capteur(id, description, place, unite));
+                    if (!listLocations.Contains(new Lieu() { name = place }))
+                    {
+                        listLocations.Add(new Lieu() { name = place });
+                    }
 
-                    if (debug)
-                        Console.WriteLine("Capteur : {0} || {1} || {2} || {3}", id, description, place, xn["grandeur"].Attributes["abreviation"].Value);
+                    capteursDico.Add(id, new Capteur(id, description, place, unite));
                 }
             }
-            if (debug)
-                Console.WriteLine("---------------------------------------");
+            return (listLocations);
         }
 
-        public Dictionary<string, Capteur> getNoEmptyCapteur(bool replace)
+        private void MesureParseur(string path)
+        {
+            foreach (string file in Directory.GetFiles(@path))
+            {
+                foreach (string line in File.ReadLines(file))
+                {
+                    string[] splitLine = line.Split(' ');
+                    if (capteursDico.ContainsKey(splitLine[2]))
+                    {
+                        capteursDico[splitLine[2]].addMesure(new Mesure(splitLine[3], splitLine[0] + " " + splitLine[1]));
+                        DateTime tmpDT = capteursDico[splitLine[2]].getMesures()[capteursDico[splitLine[2]].getMesures().Count - 1].date;
+                        if (DateTime.Compare(start, tmpDT) > 0 || start == default(DateTime))
+                        {
+                            start = tmpDT;
+                        }
+                        else if (DateTime.Compare(end, tmpDT) < 0)
+                        {
+                            end = tmpDT;
+                        }
+                    }
+                }
+            }
+        }
+
+        private Dictionary<string, Capteur> getNoEmptyCapteur()
         {
             Dictionary<string, Capteur> noEmptyCapteur = new Dictionary<string, Capteur>();
-            foreach (KeyValuePair<string, Capteur> capteur in capteursList)
+            foreach (KeyValuePair<string, Capteur> capteur in capteursDico)
             {
                 if (capteur.Value.getMesures().Count != 0)
                 {
                     noEmptyCapteur.Add(capteur.Value.id, capteur.Value);
                 }
             }
-            if (replace)
-            {
-                capteursList = noEmptyCapteur;
-                return null;
-            }
-            else
-            {
-                return noEmptyCapteur;
-            }
-
+            return noEmptyCapteur;
         }
-
     }
-
 }

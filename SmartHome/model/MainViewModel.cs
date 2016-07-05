@@ -8,24 +8,18 @@ namespace SmartHome
 {
     public class MainViewModel
     {
-        public String NameApp
-        {
-            get; set;
-        }
-
-        public List<Lieu> listLocations
-        {
-            get; set;
-        }
-
-        public OxyPlotGraph oxyplotgraph
-        {
-            get; set;
-        }
+        public string NameApp { get; set; }
+        public DateTime selectedDate { get; set; }
+        public OxyPlotGraph oxyplotgraph { get; set; }
+        public NetatmoData netatmoData { get; set; }
 
         public MainViewModel()
         {
             this.NameApp = "SmartHome";
+            this.netatmoData = new NetatmoData(); // parse tous les fichiers dispo, false/true = pour les logs
+            this.selectedDate = netatmoData.start;
+            this.oxyplotgraph = new OxyPlotGraph();
+            this.oxyplotgraph.createDateGraph();
         }
     }
 }
