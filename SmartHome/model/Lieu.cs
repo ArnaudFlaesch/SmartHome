@@ -8,24 +8,13 @@ namespace SmartHome
 {
     public class Lieu : IEquatable<Lieu>
     {
+        public int id { get; set; }
+        public String name { get; set; }
+        public List<Capteur> capteurList{ get; set; }
+
         public Lieu()
         {
-            this.listIdCapteur = new List<String>();
-        }
-
-        public int id
-        {
-            get; set;
-        }
-
-        public String name
-        {
-            get; set;
-        }
-
-        public List<String> listIdCapteur
-        {
-            get; set;
+            this.capteurList = new List<Capteur>();
         }
 
         public bool Equals(Lieu other)

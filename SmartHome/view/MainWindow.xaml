@@ -5,77 +5,80 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SmartHome" xmlns:oxy="http://oxyplot.org/wpf"
         mc:Ignorable="d" Title="{Binding NameApp}" WindowState="Maximized">
-    
+
     <Grid Name="MainGrid">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="7.5*" />
-            <RowDefinition Height="2.5*" />
-        </Grid.RowDefinitions>
-
-        <Grid Name="TopGrid">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="2*" />
-                <ColumnDefinition Width="6*" />
-                <ColumnDefinition Width="2*" />
-            </Grid.ColumnDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2.5*" />
+            <ColumnDefinition Width="7.5*" />
+        </Grid.ColumnDefinitions>
             
-            <Grid Name="LeftGrid">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="4*" />
-                    <RowDefinition Height="6*" />
-                </Grid.RowDefinitions>
+        <Grid Name="LeftGrid">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="2.5*" />
+                <RowDefinition Height="7.5*" />
+            </Grid.RowDefinitions>
 
-                <Calendar DisplayDate="{Binding selectedDate}" DisplayDateStart="{Binding dataCapteurs.start}" DisplayDateEnd="{Binding dataCapteurs.end}" SelectedDatesChanged="dateHasChanged" />
+            <Calendar DisplayDate="{Binding selectedDate}" DisplayDateStart="{Binding netatmoData.start}" DisplayDateEnd="{Binding netatmoData.end}" SelectedDatesChanged="dateHasChanged" />
 
-                <!--<ListView ItemsSource="{Binding listLocations}" Grid.Row="1">
-                    <ListView.ItemTemplate>
-                        <DataTemplate>
-                            <Grid>
-                                <Button Content="{Binding}" Click="clickOnLocationButton"/>
-                            </Grid>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>!-->
-            </Grid>
-
-            <oxy:PlotView x:Name="PlotGraph" Grid.Column="1" Model="{Binding oxyplotgraph}"/>
-
-            <Grid Name="RightGrid" Grid.Column="2">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="*" />
-                </Grid.RowDefinitions>
-                <ListView ItemsSource="{Binding listLocations}">
-                    <ListView.ItemTemplate>
-                        <DataTemplate>
-                            <Grid>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="1*" />
-                                    <RowDefinition Height="9*" />
-                                </Grid.RowDefinitions>
-                                <Label Content="{Binding}"/>
-                                <ListView ItemsSource="{Binding listCapteur}" Grid.Row="1">
-                                    <ListView.ItemTemplate>
-                                        <DataTemplate>
-                                            <Grid>
-                                                <CheckBox Content="{Binding description}" Checked="checkCaptor" Unchecked="unCheckCaptor"/>
-                                            </Grid>
-                                        </DataTemplate>
-                                    </ListView.ItemTemplate>
-                                </ListView>
-                            </Grid>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
-            </Grid>
+            <ListView ItemsSource="{Binding netatmoData.locationList}" Grid.Row="1">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="1*" />
+                                <RowDefinition Height="9*" />
+                            </Grid.RowDefinitions>
+                                
+                            <Label Content="{Binding name}" />
+                            <ListView ItemsSource="{Binding capteurList}" Grid.Row="1">
+                                <ListView.ItemTemplate>
+                                    <DataTemplate>
+                                        <Grid>
+                                            <CheckBox Content="{Binding description}" Checked="checkCaptor" Unchecked="unCheckCaptor"/>
+                                        </Grid>
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+                            </ListView>
+                        </Grid>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
         </Grid>
-        
-        <Grid Name="BottomGrid" Grid.Row="1">
+
+        <Grid Name="CenterAndRightGrid" Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="7.5*" />
+                <RowDefinition Height="2.5*" />
+            </Grid.RowDefinitions>
+            
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="7.5*" />
+                <ColumnDefinition Width="2.5*" />
             </Grid.ColumnDefinitions>
+
+            <oxy:PlotView x:Name="PlotGraph" Model="{Binding oxyplotgraph}"/>
+
+            <Grid Name="RightGrid" Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1*" />
+                    <RowDefinition Height="1*" />
+                    <RowDefinition Height="1*" />
+                    <RowDefinition Height="7*" />
+                </Grid.RowDefinitions>
+
+                <TextBox Name="SeuilTextBox" />
+                <TextBox Name="SeuilValue" Grid.Row="1" />
+                <Button Content="Valider" Click="validateSeuil" Grid.Row="2" />
+                <Label Content="Placeholder" Grid.Row="3" />
+            </Grid>
+            
+            <Grid Name="BottomGrid" Grid.Row="1" Grid.ColumnSpan="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+            </Grid>
         </Grid>
     </Grid>
 </Window>

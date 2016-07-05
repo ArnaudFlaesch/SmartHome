@@ -34,8 +34,8 @@ namespace SmartHome
         public void initLocationButtons()
         {
             int row = 0, column = 0;
-            int maxRows = model.listLocations.Count / 3;
-            int remainingButtons = model.listLocations.Count % 3;
+            int maxRows = model.netatmoData.locationList.Count / 3;
+            int remainingButtons = model.netatmoData.locationList.Count % 3;
             if (remainingButtons != 0)
             {
                 maxRows++;
@@ -46,13 +46,13 @@ namespace SmartHome
                 BottomGrid.RowDefinitions.Add(new RowDefinition());
             }
 
-            foreach (Lieu lieu in model.listLocations)
+            foreach (Lieu lieu in model.netatmoData.locationList)
             {
                 Button locationButton = new Button();
                 locationButton.Content = lieu.name;
                 Grid.SetColumn(locationButton, column);
                 Grid.SetRow(locationButton, row);
-                locationButton.Click += clickOnLocationButton;
+                //locationButton.Click += clickOnLocationButton;
                 
                 if (row == maxRows - 1 && remainingButtons == 1)
                 {
@@ -76,7 +76,7 @@ namespace SmartHome
         private void clickOnLocationButton(object sender, RoutedEventArgs e)
         {
             String locationName = ((Button)sender).Content.ToString();
-            this.model.dataCapteurs.displayIdCapteurs(locationName);
+            //this.model.netatmoData.getCapteursIdFromLocationName(locationName);
         }
 
         private void checkCaptor(object sender, RoutedEventArgs e)
@@ -87,6 +87,11 @@ namespace SmartHome
         private void unCheckCaptor(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        private void validateSeuil(object sender, RoutedEventArgs e)
+        {
+            this.model.oxyplotgraph.ajouteSeuil(SeuilTextBox.Text, Int32.Parse(SeuilValue.Text));
         }
     }
 }

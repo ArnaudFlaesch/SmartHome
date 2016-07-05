@@ -10,43 +10,54 @@ namespace SmartHome
 {
     public class NetatmoData
     {
-        private static String pathToXmlFile = "../../capteurs.xtim";
-        private static String pathToDataFolder = "../../netatmo";
+        private string pathToXmlFile = "../../capteurs.xtim";
+        private string pathToDataFolder = "../../netatmo";
 
-        Dictionary<string, Capteur> capteursList { get; set; }
+        public List<Lieu> locationList { get; set; }
+        public Dictionary<string, Capteur> capteursDico { get; set; }
         public DateTime start { get; set; }
         public DateTime end { get; set; }
 
         public NetatmoData()
         {
-            capteursList = new Dictionary<string, Capteur>();
+            capteursDico = new Dictionary<string, Capteur>();
+
+            locationList = parseLocationsFromXml(pathToXmlFile);
             CapteurParseur(pathToXmlFile);
             MesureParseur(pathToDataFolder);
-        }
+            capteursDico = getNoEmptyCapteur();
 
-        private void MesureParseur(string path)
-        {
-            foreach (string file in Directory.GetFiles(@path))
+            foreach (KeyValuePair<string, Capteur> capteur in capteursDico)
             {
-                foreach (string line in File.ReadLines(file))
+                foreach (Lieu lieu in locationList)
                 {
-                    string[] splitLine = line.Split(' ');
-                    if (capteursList.ContainsKey(splitLine[2]))
+                    if (lieu.name.Equals(capteur.Value.lieu))
                     {
-                        capteursList[splitLine[2]].
-                           addMesure(new Mesure(splitLine[3], splitLine[0] + " " + splitLine[1]));
-                        DateTime tmpDT = capteursList[splitLine[2]].getMesures()[capteursList[splitLine[2]].getMesures().Count - 1].date;
-                        if (DateTime.Compare(start, tmpDT) > 0 || start == default(DateTime))
-                        {
-                            start = tmpDT;
-                        }
-                        else if (DateTime.Compare(end, tmpDT) < 0)
-                        {
-                            end = tmpDT;
-                        }
+                        lieu.capteurList.Add(capteur.Value);
+                        break;
                     }
                 }
             }
+            capteursDico = null;
+        }
+
+        private List<Lieu> parseLocationsFromXml(string path)
+        {
+            List<Lieu> listLocations = new List<Lieu>();
+
+            XmlDocument doc = new XmlDocument();
+            doc.Load(path);
+            XmlNodeList capteursListXML = doc.SelectSingleNode("capteurs").ChildNodes;
+
+            for (int i = 0; i < capteursListXML.Count; i++)
+            {
+                XmlNode capteur = capteursListXML[i];
+                if (!listLocations.Contains(new Lieu() { name = capteur.SelectSingleNode("lieu").InnerXml }))
+                {
+                    listLocations.Add(new Lieu() { name = capteur.SelectSingleNode("lieu").InnerXml });
+                }
+            }
+            return (listLocations);
         }
 
         private void CapteurParseur(String path)
@@ -64,43 +75,46 @@ namespace SmartHome
                     string place = xn["lieu"].InnerText;
                     string unite = xn["grandeur"].Attributes["abreviation"].Value;
 
-                    capteursList.Add(id, new Capteur(id, description, place, unite));
+                    capteursDico.Add(id, new Capteur(id, description, place, unite));
                 }
             }
         }
 
-        public Dictionary<string, Capteur> getNoEmptyCapteur(bool replace)
+        private void MesureParseur(string path)
+        {
+            foreach (string file in Directory.GetFiles(@path))
+            {
+                foreach (string line in File.ReadLines(file))
+                {
+                    string[] splitLine = line.Split(' ');
+                    if (capteursDico.ContainsKey(splitLine[2]))
+                    {
+                        capteursDico[splitLine[2]].addMesure(new Mesure(splitLine[3], splitLine[0] + " " + splitLine[1]));
+                        DateTime tmpDT = capteursDico[splitLine[2]].getMesures()[capteursDico[splitLine[2]].getMesures().Count - 1].date;
+                        if (DateTime.Compare(start, tmpDT) > 0 || start == default(DateTime))
+                        {
+                            start = tmpDT;
+                        }
+                        else if (DateTime.Compare(end, tmpDT) < 0)
+                        {
+                            end = tmpDT;
+                        }
+                    }
+                }
+            }
+        }
+
+        private Dictionary<string, Capteur> getNoEmptyCapteur()
         {
             Dictionary<string, Capteur> noEmptyCapteur = new Dictionary<string, Capteur>();
-            foreach (KeyValuePair<string, Capteur> capteur in capteursList)
+            foreach (KeyValuePair<string, Capteur> capteur in capteursDico)
             {
                 if (capteur.Value.getMesures().Count != 0)
                 {
                     noEmptyCapteur.Add(capteur.Value.id, capteur.Value);
                 }
             }
-            if (replace)
-            {
-                capteursList = noEmptyCapteur;
-                return null;
-            }
-            else
-            {
-                return noEmptyCapteur;
-            }
+            return noEmptyCapteur;
         }
-
-        public void displayIdCapteurs(string lieu)
-        {
-            foreach(KeyValuePair<string, Capteur> capteur in capteursList)
-            {
-                if (capteur.Value.lieu.Equals(lieu))
-                {
-                    Console.WriteLine(capteur.Value.description);
-                }
-            }
-        }
-
     }
-
 }

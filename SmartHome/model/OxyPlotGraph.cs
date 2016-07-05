@@ -20,21 +20,23 @@ namespace SmartHome
 
         public void createDateGraph()
         {
-            this.InvalidatePlot(true);
             this.Axes.Add(new DateTimeAxis { Position = AxisPosition.Bottom, StringFormat = "HH:mm", IntervalType = DateTimeIntervalType.Hours });
             this.Axes.Add(new LinearAxis { Position = AxisPosition.Left });
+            this.InvalidatePlot(true);
         }
 
         public void createBarGraph()
         {
-            this.InvalidatePlot(true);
             //this.Axes.Add(new DateTimeAxis { Position = AxisPosition.Bottom, StringFormat = "HH:mm", IntervalType = DateTimeIntervalType.Hours });
             this.Axes.Add(new LinearAxis { Position = AxisPosition.Left });
+            this.InvalidatePlot(true);
         }
 
-        public void ajouteSeuil()
+
+        public void ajouteSeuil(string name, int value)
         {
-            this.Annotations.Add(new LineAnnotation { Type = LineAnnotationType.Vertical, X = 100, /*MaximumY = 4,*/ Color = OxyColors.Gold, Text = "Seuil" });
+            this.Annotations.Add(new LineAnnotation { Type = LineAnnotationType.Horizontal, Y = value, /*MaximumY = 4,*/ Color = OxyColors.Red, Text = name });
+            this.InvalidatePlot(true);
         }
     }
 }
