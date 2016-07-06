@@ -14,6 +14,8 @@ namespace SmartHome
         public string lieu { get; set; }
         public string unite { get; set; }
         public List<Mesure> mesureList;
+		
+		public bool isActivated { get; set; }
 
         public Capteur(string id, string description, string lieu, string unite)
         {

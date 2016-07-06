@@ -18,10 +18,7 @@ namespace SmartHome
 
     public partial class MainWindow : Window
     {
-        public MainViewModel model
-        {
-            get; set;
-        }
+        public MainViewModel model { get; set; }
 
         public MainWindow()
         {
@@ -69,24 +66,44 @@ namespace SmartHome
 
         private void dateHasChanged(object sender, SelectionChangedEventArgs e)
         {
-            DateTime selectedDate = (DateTime)((Calendar)sender).SelectedDate;
-            Console.WriteLine(selectedDate);
+            this.model.selectedDate = (DateTime)((Calendar)sender).SelectedDate;
+            this.refreshGraph();
         }
 
+        /*
         private void clickOnLocationButton(object sender, RoutedEventArgs e)
         {
             String locationName = ((Button)sender).Content.ToString();
             //this.model.netatmoData.getCapteursIdFromLocationName(locationName);
         }
+        */
 
+        
         private void checkCaptor(object sender, RoutedEventArgs e)
         {
-
+            this.refreshGraph();
         }
 
         private void unCheckCaptor(object sender, RoutedEventArgs e)
         {
-
+            this.refreshGraph();
+        }
+        
+        private void refreshGraph()
+        {
+            this.model.oxyplotgraph.Series.Clear();
+            List<Capteur> capteurList = new List<Capteur>();
+            foreach (Lieu lieu in this.model.netatmoData.locationList)
+            {
+                foreach (Capteur capteur in lieu.capteurList)
+                {
+                    if (capteur.isActivated)
+                    {
+                        this.model.oxyplotgraph.addMesuresFromCapteur(capteur, this.model.selectedDate);
+                    }
+                }
+            }
+            this.model.oxyplotgraph.InvalidatePlot(true);
         }
 
         private void validateSeuil(object sender, RoutedEventArgs e)

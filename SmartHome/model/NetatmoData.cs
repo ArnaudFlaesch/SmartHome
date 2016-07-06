@@ -24,6 +24,18 @@ namespace SmartHome
             locationList = CapteurParseur(pathToXmlFile);
             MesureParseur(pathToDataFolder);
             capteursDico = getNoEmptyCapteur();
+
+            foreach (KeyValuePair<string, Capteur> capteur in capteursDico)
+            {
+                foreach (Lieu lieu in locationList)
+                {
+                    if (lieu.name.Equals(capteur.Value.lieu))
+                    {
+                        lieu.capteurList.Add(capteur.Value);
+                        break;
+                    }
+                }
+            }
         }
 
 

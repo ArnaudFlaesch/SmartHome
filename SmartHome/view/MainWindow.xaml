@@ -34,7 +34,7 @@
                                 <ListView.ItemTemplate>
                                     <DataTemplate>
                                         <Grid>
-                                            <CheckBox Content="{Binding description}" Checked="checkCaptor" Unchecked="unCheckCaptor"/>
+                                            <CheckBox Content="{Binding description}" IsChecked="{Binding isActivated}" Checked="checkCaptor" Unchecked="unCheckCaptor"/>
                                         </Grid>
                                     </DataTemplate>
                                 </ListView.ItemTemplate>
