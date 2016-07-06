@@ -71,13 +71,39 @@
                 <Button Content="Valider" Click="validateSeuil" Grid.Row="2" />
                 <Label Content="Placeholder" Grid.Row="3" />
             </Grid>
-            
+
             <Grid Name="BottomGrid" Grid.Row="1" Grid.ColumnSpan="2">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
+                <ListBox ItemsSource="{Binding netatmoData.locationList}" HorizontalContentAlignment="Stretch">
+                    <ListBox.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel Orientation="Horizontal"></StackPanel>
+                        </ItemsPanelTemplate>
+                    </ListBox.ItemsPanel>
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Vertical">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="15*" />
+                                        <RowDefinition Height="60*" />
+                                        <RowDefinition Height="15*" />
+                                    </Grid.RowDefinitions>
+                                </Grid>
+                                <Label Content="{Binding name}" />
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+
+                <!--<ItemsControl ItemsSource="{Binding netatmoData.locationList}" Grid.Row="1">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <Label Content="{Binding name}" />
+                            </Grid>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>!-->
             </Grid>
         </Grid>
     </Grid>
