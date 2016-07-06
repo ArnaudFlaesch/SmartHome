@@ -90,20 +90,21 @@
                                     </Grid.RowDefinitions>
                                 </Grid>
                                 <Label Content="{Binding name}" />
+                                <ListBox ItemsSource="{Binding capteurList}">
+                                    <ListBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <StackPanel Orientation="Horizontal">
+                                                <Grid>
+                                                    <Label Content="{Binding id}" />
+                                                </Grid>
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </ListBox.ItemTemplate>
+                                </ListBox>
                             </StackPanel>
                         </DataTemplate>
                     </ListBox.ItemTemplate>
                 </ListBox>
-
-                <!--<ItemsControl ItemsSource="{Binding netatmoData.locationList}" Grid.Row="1">
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                            <Grid>
-                                <Label Content="{Binding name}" />
-                            </Grid>
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>!-->
             </Grid>
         </Grid>
     </Grid>
