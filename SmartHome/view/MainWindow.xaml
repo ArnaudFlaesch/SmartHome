@@ -5,21 +5,14 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SmartHome" xmlns:oxy="http://oxyplot.org/wpf"
         mc:Ignorable="d" Title="{Binding NameApp}" WindowState="Maximized">
-
+    
     <Grid Name="MainGrid">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="2.5*" />
             <ColumnDefinition Width="7.5*" />
         </Grid.ColumnDefinitions>
-            
+
         <Grid Name="LeftGrid">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="2.5*" />
-                <RowDefinition Height="7.5*" />
-            </Grid.RowDefinitions>
-
-            <Calendar DisplayDate="{Binding selectedDate}" DisplayDateStart="{Binding netatmoData.start}" DisplayDateEnd="{Binding netatmoData.end}" SelectedDatesChanged="dateHasChanged" />
-
             <ListView ItemsSource="{Binding netatmoData.locationList}" Grid.Row="1">
                 <ListView.ItemTemplate>
                     <DataTemplate>
@@ -46,11 +39,6 @@
         </Grid>
 
         <Grid Name="CenterAndRightGrid" Grid.Column="1">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="7.5*" />
-                <RowDefinition Height="2.5*" />
-            </Grid.RowDefinitions>
-            
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="7.5*" />
                 <ColumnDefinition Width="2.5*" />
@@ -60,52 +48,81 @@
 
             <Grid Name="RightGrid" Grid.Column="1">
                 <Grid.RowDefinitions>
+                    <RowDefinition Height="3.5*" />
                     <RowDefinition Height="1*" />
                     <RowDefinition Height="1*" />
                     <RowDefinition Height="1*" />
-                    <RowDefinition Height="7*" />
+                    <RowDefinition Height="3.5*" />
                 </Grid.RowDefinitions>
 
-                <TextBox Name="SeuilTextBox" />
-                <TextBox Name="SeuilValue" Grid.Row="1" />
-                <Button Content="Valider" Click="validateSeuil" Grid.Row="2" />
-                <Label Content="Placeholder" Grid.Row="3" />
-            </Grid>
+                <Calendar DisplayDate="{Binding selectedDate}" DisplayDateStart="{Binding netatmoData.start}" DisplayDateEnd="{Binding netatmoData.end}" SelectedDatesChanged="dateHasChanged" />
 
-            <Grid Name="BottomGrid" Grid.Row="1" Grid.ColumnSpan="2">
-                <ListBox ItemsSource="{Binding netatmoData.locationList}" HorizontalContentAlignment="Stretch">
-                    <ListBox.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <StackPanel Orientation="Horizontal"></StackPanel>
-                        </ItemsPanelTemplate>
-                    </ListBox.ItemsPanel>
-                    <ListBox.ItemTemplate>
-                        <DataTemplate>
-                            <StackPanel Orientation="Vertical">
-                                <Grid>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="15*" />
-                                        <RowDefinition Height="60*" />
-                                        <RowDefinition Height="15*" />
-                                    </Grid.RowDefinitions>
-                                </Grid>
-                                <Label Content="{Binding name}" />
-                                <ListBox ItemsSource="{Binding capteurList}">
-                                    <ListBox.ItemTemplate>
-                                        <DataTemplate>
-                                            <StackPanel Orientation="Horizontal">
-                                                <Grid>
-                                                    <Label Content="{Binding id}" />
-                                                </Grid>
-                                            </StackPanel>
-                                        </DataTemplate>
-                                    </ListBox.ItemTemplate>
-                                </ListBox>
-                            </StackPanel>
-                        </DataTemplate>
-                    </ListBox.ItemTemplate>
-                </ListBox>
+                <TextBox Name="SeuilTextBox" Grid.Row="1" />
+                <TextBox Name="SeuilValue" Grid.Row="2" />
+                <Button Content="Valider" Click="validateSeuil" Grid.Row="3" />
+                <Label Content="Placeholder" Grid.Row="4" />
             </Grid>
         </Grid>
+
+        <DockPanel Grid.ColumnSpan="2">
+            <Expander DockPanel.Dock="Bottom">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="9*" />
+                        <RowDefinition Height="1*" />
+                    </Grid.RowDefinitions>
+                    <StackPanel>
+                        <ComboBox SelectionChanged="onSelectedCaptorTypeChanged">
+                            <ComboBoxItem Content="Co2"  />
+                            <ComboBoxItem Content="Humidité" />
+                            <ComboBoxItem Content="Temperature" />
+                            <ComboBoxItem Content="Bruit" />
+                            <ComboBoxItem Content="Pression" />
+                        </ComboBox>
+
+                        <ListBox ItemsSource="{Binding netatmoData.locationList}" HorizontalContentAlignment="Stretch">
+                            <ListBox.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <UniformGrid Columns="3" />
+                                </ItemsPanelTemplate>
+                            </ListBox.ItemsPanel>
+
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Vertical">
+                                        <Grid>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="15*" />
+                                                <RowDefinition Height="70*" MinHeight="150" />
+                                                <RowDefinition Height="15*" />
+                                            </Grid.RowDefinitions>
+                                        </Grid>
+                                        <Label Content="{Binding name}" />
+                                        <Label Content="{Binding activatedCapteur}" Grid.Row="1"/>
+                                        <!--<ListBox ItemsSource="{Binding capteurList}" Grid.Row="1">
+                                        <ListBox.ItemTemplate>
+                                            <DataTemplate>
+                                                <StackPanel Orientation="Horizontal">
+                                                    <Grid>
+                                                        <Label Background="{Binding activeMesure}" Content="{Binding id}" />
+                                                    </Grid>
+                                                </StackPanel>
+                                            </DataTemplate>
+                                        </ListBox.ItemTemplate>
+                                    </ListBox>!-->
+                                        <Label Content="Nombre de personnes :" Grid.Row="2"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                        <Button Content="Démarrer le timelapse" Height="50" Width="100" Click="startTimeLapse" />
+                    </StackPanel>
+                    
+                </Grid>
+            </Expander>
+            <Border>
+
+            </Border>
+        </DockPanel>
     </Grid>
 </Window>

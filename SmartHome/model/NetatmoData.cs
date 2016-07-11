@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -13,7 +14,7 @@ namespace SmartHome
         private string pathToXmlFile = "../../capteurs.xtim";
         private string pathToDataFolder = "../../netatmo";
 
-        public List<Lieu> locationList { get; set; }
+        public ObservableCollection<Lieu> locationList { get; set; }
         public Dictionary<string, Capteur> capteursDico { get; set; }
         public DateTime start { get; set; }
         public DateTime end { get; set; }
@@ -88,9 +89,9 @@ namespace SmartHome
             return timeLaps;
         }
 
-        private List<Lieu> CapteurParseur(String path)
+        private ObservableCollection<Lieu> CapteurParseur(String path)
         {
-            List<Lieu> listLocations = new List<Lieu>();
+            ObservableCollection<Lieu> listLocations = new ObservableCollection<Lieu>();
             XmlDocument xmlDoc = new XmlDocument();
             xmlDoc.Load(path);
 
@@ -102,14 +103,14 @@ namespace SmartHome
                     string id = xn["id"].InnerText;
                     string description = xn["description"].InnerText;
                     string place = xn["lieu"].InnerText;
-                    string unite = xn["grandeur"].Attributes["abreviation"].Value;
+                    string grandeurNom = xn["grandeur"].Attributes["nom"].Value;
 
                     if (!listLocations.Contains(new Lieu() { name = place }))
                     {
                         listLocations.Add(new Lieu() { name = place });
                     }
 
-                    capteursDico.Add(id, new Capteur(id, description, place, unite));
+                    capteursDico.Add(id, new Capteur(id, description, place, grandeurNom));
                 }
             }
             return (listLocations);

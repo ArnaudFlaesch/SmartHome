@@ -4,6 +4,7 @@ using OxyPlot.Axes;
 using OxyPlot.Series;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -38,6 +39,7 @@ namespace SmartHome
         public void addMesuresFromCapteur(Capteur capteur, DateTime selectedDate)
         {
             DateTime end = selectedDate.AddDays(1);
+            end = new DateTime(end.Year, end.Month, end.Day, 0, 0, 0);
             List<Mesure> mesures = capteur.mesureList.FindAll(mesure => mesure.date >= selectedDate && mesure.date < end);
             LineSeries serie = new LineSeries { Title = capteur.description };
             foreach (Mesure mesure in mesures)

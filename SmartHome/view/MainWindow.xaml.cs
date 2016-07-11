@@ -129,15 +129,6 @@ namespace SmartHome
             this.model.selectedDate = (DateTime)((Calendar)sender).SelectedDate;
             this.refreshGraph();
         }
-
-        /*
-        private void clickOnLocationButton(object sender, RoutedEventArgs e)
-        {
-            String locationName = ((Button)sender).Content.ToString();
-            //this.model.netatmoData.getCapteursIdFromLocationName(locationName);
-        }
-        */
-
         
         private void checkCaptor(object sender, RoutedEventArgs e)
         {
@@ -148,7 +139,39 @@ namespace SmartHome
         {
             this.refreshGraph();
         }
-        
+
+        private void onSelectedCaptorTypeChanged(object sender, RoutedEventArgs e)
+        {
+            this.model.selectedTypeCaptor = ((ComboBoxItem)(((ComboBox)sender).SelectedItem)).Content.ToString();
+            Console.WriteLine(this.model.selectedTypeCaptor);
+            foreach (Lieu lieu in model.netatmoData.locationList)
+            {
+                foreach (Capteur capteur in lieu.capteurList)
+                {
+                    if (capteur.grandeurNom.Equals(this.model.selectedTypeCaptor))
+                    {
+                        lieu.activatedCapteur = capteur.description;
+                        Console.WriteLine(capteur.description);
+                    }
+                }
+            }
+        }
+
+        private void startTimeLapse(object sender, RoutedEventArgs e)
+        {
+            /*foreach (Lieu lieu in model.netatmoData.locationList)
+            {
+                foreach(Capteur capteur in lieu.capteurList)
+                {
+                    if (capteur.grandeurNom.Equals(this.model.selectedTypeCaptor))
+                    {
+
+                        Console.WriteLine(capteur.description);
+                    }
+                }
+            }*/
+        }
+
         private void refreshGraph()
         {
             this.model.oxyplotgraph.Series.Clear();

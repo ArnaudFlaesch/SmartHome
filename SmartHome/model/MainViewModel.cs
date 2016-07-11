@@ -9,6 +9,7 @@ namespace SmartHome
     public class MainViewModel
     {
         public string NameApp { get; set; }
+        public string selectedTypeCaptor { get; set; }
         public DateTime selectedDate { get; set; }
         public OxyPlotGraph oxyplotgraph { get; set; }
         public NetatmoData netatmoData { get; set; }
@@ -31,6 +32,7 @@ namespace SmartHome
             //-----------------------------------
 
             this.selectedDate = netatmoData.start;
+            this.selectedTypeCaptor = "";
             this.oxyplotgraph = new OxyPlotGraph();
         }
     }

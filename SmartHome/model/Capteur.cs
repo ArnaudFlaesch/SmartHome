@@ -1,28 +1,44 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media;
 
 namespace SmartHome
 {
     //Classe portant les capteurs parsé dans CapteurParseur.
-    public class Capteur
+    public class Capteur : INotifyPropertyChanged
     {
+        public event PropertyChangedEventHandler PropertyChanged;
+
         public string id { get; set; }
         public string description { get; set; }
         public string lieu { get; set; }
-        public string unite { get; set; }
+        public string grandeurNom { get; set; }
         public List<Mesure> mesureList;
-		
-		public bool isActivated { get; set; }
+        public bool isActivated { get; set; }
 
-        public Capteur(string id, string description, string lieu, string unite)
+        private SolidColorBrush _activeMesure;
+        public SolidColorBrush activeMesure
+        {
+            get { return _activeMesure; }
+            set
+            {
+                _activeMesure = value;
+                NotifyPropertyChanged();
+            }
+        }
+
+        public Capteur(string id, string description, string lieu, string grandeurNom)
         {
             this.id = id;
             this.description = description;
             this.lieu = lieu;
-            this.unite = unite;
+            this.grandeurNom = grandeurNom;
             this.mesureList = new List<Mesure>();
         }
 
@@ -30,6 +46,7 @@ namespace SmartHome
         {
             this.mesureList.Add(mesure);
         }
+
         public List<Mesure> getMesures()
         {
             return this.mesureList;
@@ -45,8 +62,15 @@ namespace SmartHome
             this.id = capteur.id;
             this.description = capteur.description;
             this.lieu = capteur.lieu;
-            this.unite = capteur.unite;
-            //this.mesures = new List<Mesure>(capteur.mesures);
+            this.grandeurNom = capteur.grandeurNom;
+        }
+
+        private void NotifyPropertyChanged([CallerMemberName] String propertyName = "")
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+            }
         }
     }
 }
