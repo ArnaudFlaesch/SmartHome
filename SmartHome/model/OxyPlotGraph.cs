@@ -41,6 +41,9 @@ namespace SmartHome
             DateTime end = selectedDate.AddDays(1);
             end = new DateTime(end.Year, end.Month, end.Day, 0, 0, 0);
             List<Mesure> mesures = capteur.mesureList.FindAll(mesure => mesure.date >= selectedDate && mesure.date < end);
+            //---------- Fonction de Moyenne locales : Deux arguement -> La liste de mesure / le nombre de points a prendre (a gauche et a droite du point courant) pour calculer la moyenne
+            transfoMoyennelocal(mesures, 10);
+            //-------------------------------
             LineSeries serie = new LineSeries { Title = capteur.description, Tag = capteur.id };
             foreach (Mesure mesure in mesures)
             {
@@ -76,6 +79,39 @@ namespace SmartHome
         {
             this.Annotations.Add(new RectangleAnnotation { MinimumY = value, Fill = OxyColors.Red, Text = name });
             this.InvalidatePlot(true);
+        }
+
+        private void transfoMoyennelocal(List<Mesure> mesures, int amplitude)
+        {
+
+            int tmpAmplitude;
+            for (int i = 0; i < mesures.Count; i++)
+            {
+                tmpAmplitude = amplitude;
+                while (amplitudeOutOfBounds(i, tmpAmplitude, mesures.Count()))
+                {
+                    tmpAmplitude--;
+                }
+
+                double somme = 0;
+                for(int j = i - tmpAmplitude; j <= i + tmpAmplitude;j++)
+                {
+                    somme += mesures[j].value;
+                }
+                mesures[i].value = somme / (tmpAmplitude * 2 + 1);
+            }
+            
+        }   
+
+        private bool amplitudeOutOfBounds(int currentIndex, int amplitude, int sizeList)
+        {
+            if (currentIndex - amplitude < 0 || currentIndex + amplitude >= sizeList)
+            {
+                return true;
+            }
+            
+            return false;
+            
         }
     }
 }
