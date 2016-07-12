@@ -17,6 +17,7 @@ namespace SmartHome
         public string name { get; set; }
         public ObservableCollection<Capteur> capteurList { get; set; }
 
+        /*
         private string _activatedCapteur;
         public string activatedCapteur
         {
@@ -26,12 +27,12 @@ namespace SmartHome
                 _activatedCapteur = value;
                 NotifyPropertyChanged();
             }
-        }
+        }*/
 
         public Lieu()
         {
             this.capteurList = new ObservableCollection<Capteur>();
-            this.activatedCapteur = "";
+            //this.activatedCapteur = "";
         }
 
         public bool Equals(Lieu other)

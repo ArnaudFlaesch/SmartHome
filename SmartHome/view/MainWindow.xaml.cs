@@ -1,8 +1,15 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using OxyPlot;
+using OxyPlot.Series;
+using OxyPlot.Wpf;
+using SmartHome.utils;
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -45,85 +52,10 @@ namespace SmartHome
             myImageSource.UriSource = new Uri("images/people_icon.png");
             myImageSource.EndInit();
             myImage.Source = myImageSource;*/
-
-
-            this.initLocationButtons();
-        }
-
-        public void initLocationButtons()
-        {
-            /*
-            int row = 0, column = 0;
-            int maxRows = model.netatmoData.locationList.Count / 3;
-            int remainingButtons = model.netatmoData.locationList.Count % 3;
-            if (remainingButtons != 0)
-            {
-                maxRows++;
-            }
-            
-            for (int i = 0; i<maxRows; i++)
-            {
-                BottomGrid.RowDefinitions.Add(new RowDefinition());
-            }
-
-            foreach (Lieu lieu in model.netatmoData.locationList)
-            {
-                Grid locationButton = createLocationGrid(lieu);
-                Grid.SetColumn(locationButton, column);
-                Grid.SetRow(locationButton, row);
-
-                if (row == maxRows - 1 && remainingButtons == 1)
-                {
-                    Grid.SetColumnSpan(locationButton, 3);
-                }
-                BottomGrid.Children.Add(locationButton);
-                row = (column == 2) ? row += 1 : row;
-                column = (column == 2) ? column = 0 : column += 1;
-            }
-        }
-
-        private Grid createLocationGrid(Lieu lieu)
-        {
-            Grid locationButton = new Grid();
-            RowDefinition header = new RowDefinition();
-            header.Height = new GridLength(40, GridUnitType.Star);
-            RowDefinition body = new RowDefinition();
-            body.Height = new GridLength(20, GridUnitType.Star);
-            RowDefinition footer = new RowDefinition();
-            footer.Height = new GridLength(40, GridUnitType.Star);
-
-            locationButton.RowDefinitions.Add(header);
-            locationButton.RowDefinitions.Add(body);
-            locationButton.RowDefinitions.Add(footer);
-
-            Grid bodyGrid = new Grid();
-            for (int i = 0; i < lieu.capteurList.Count; i++)
-            {
-                bodyGrid.ColumnDefinitions.Add(new ColumnDefinition());
-            }
-
-            Label labelLieu = new Label { Content = lieu.name };
-            Grid.SetRow(labelLieu, 0);
-            locationButton.Children.Add(labelLieu);
-            Grid.SetRow(bodyGrid, 1);
-            locationButton.Children.Add(bodyGrid);
-
-            Grid numberOfPeopleGrid = new Grid();
-            for (int j = 0; j<3; j++)
-            {
-                numberOfPeopleGrid.ColumnDefinitions.Add(new ColumnDefinition());
-                Label peopleNumber = new Label { Background = myImage };
-                peopleNumber.Height = locationButton.Height;
-                peopleNumber.Width = myImage.ImageSource.Width;
-                Grid.SetColumn(peopleNumber, j);                
-            }
-            Grid.SetRow(numberOfPeopleGrid, 2);
-            locationButton.Children.Add(numberOfPeopleGrid);
-            return (locationButton);*/
         }
 
         /* EVENTS */
-
+        
         private void dateHasChanged(object sender, SelectionChangedEventArgs e)
         {
             this.model.selectedDate = (DateTime)((Calendar)sender).SelectedDate;
@@ -138,38 +70,6 @@ namespace SmartHome
         private void unCheckCaptor(object sender, RoutedEventArgs e)
         {
             this.refreshGraph();
-        }
-
-        private void onSelectedCaptorTypeChanged(object sender, RoutedEventArgs e)
-        {
-            this.model.selectedTypeCaptor = ((ComboBoxItem)(((ComboBox)sender).SelectedItem)).Content.ToString();
-            Console.WriteLine(this.model.selectedTypeCaptor);
-            foreach (Lieu lieu in model.netatmoData.locationList)
-            {
-                foreach (Capteur capteur in lieu.capteurList)
-                {
-                    if (capteur.grandeurNom.Equals(this.model.selectedTypeCaptor))
-                    {
-                        lieu.activatedCapteur = capteur.description;
-                        Console.WriteLine(capteur.description);
-                    }
-                }
-            }
-        }
-
-        private void startTimeLapse(object sender, RoutedEventArgs e)
-        {
-            /*foreach (Lieu lieu in model.netatmoData.locationList)
-            {
-                foreach(Capteur capteur in lieu.capteurList)
-                {
-                    if (capteur.grandeurNom.Equals(this.model.selectedTypeCaptor))
-                    {
-
-                        Console.WriteLine(capteur.description);
-                    }
-                }
-            }*/
         }
 
         private void refreshGraph()
@@ -192,6 +92,44 @@ namespace SmartHome
         private void validateSeuil(object sender, RoutedEventArgs e)
         {
             this.model.oxyplotgraph.ajouteSeuil(SeuilTextBox.Text, Int32.Parse(SeuilValue.Text));
+        }
+
+        private void exportPNG(object sender, RoutedEventArgs e)
+        {
+            var pngExporter = new PngExporter { Height = 600, Width = 900, Background = OxyColors.White };
+            SaveFileDialog saveDialog = new Microsoft.Win32.SaveFileDialog();
+            saveDialog.Filter = "PNG Files (*.png)|*.png";
+            Nullable<bool> result = saveDialog.ShowDialog();
+            if (result == true)
+            {
+                string filename = saveDialog.FileName;
+                pngExporter.ExportToFile(this.model.oxyplotgraph, filename);
+            }
+        }
+
+        private void exportPDF(object sender, RoutedEventArgs e)
+        {
+            var pdfExporter = new PdfExporter { Width = 600, Height = 900 };
+            SaveFileDialog saveDialog = new Microsoft.Win32.SaveFileDialog();
+            saveDialog.Filter = "PDF Files (*.pdf)|*.pdf";
+            Nullable<bool> result = saveDialog.ShowDialog();
+            if (result == true)
+            {
+                string filename = saveDialog.FileName;
+                var stream = File.Create(filename);
+                pdfExporter.Export(this.model.oxyplotgraph, stream);
+            }
+        }
+
+        private void exportMail(object sender, RoutedEventArgs e)
+        {
+            var pngExporter = new PngExporter { Height = 600, Width = 900, Background = OxyColors.White };
+            string pathToFile = "../../Data_Oxyplot.png";
+            pngExporter.ExportToFile(this.model.oxyplotgraph, pathToFile);
+            string uri = ((Button)sender).Tag.ToString();
+            Console.WriteLine(uri + "&Attachment=" + pathToFile);
+            Process.Start(uri + "&Attachment=" + pathToFile);
+            e.Handled = true;
         }
     }
 }

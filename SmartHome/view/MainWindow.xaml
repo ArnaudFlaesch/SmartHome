@@ -13,29 +13,33 @@
         </Grid.ColumnDefinitions>
 
         <Grid Name="LeftGrid">
-            <ListView ItemsSource="{Binding netatmoData.locationList}" Grid.Row="1">
-                <ListView.ItemTemplate>
+            <ListBox ItemsSource="{Binding netatmoData.locationList}" Grid.Row="1">
+                <ListBox.ItemTemplate>
                     <DataTemplate>
-                        <Grid>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="1*" />
-                                <RowDefinition Height="9*" />
-                            </Grid.RowDefinitions>
-                                
-                            <Label Content="{Binding name}" />
-                            <ListView ItemsSource="{Binding capteurList}" Grid.Row="1">
-                                <ListView.ItemTemplate>
-                                    <DataTemplate>
-                                        <Grid>
-                                            <CheckBox Content="{Binding description}" IsChecked="{Binding isActivated}" Checked="checkCaptor" Unchecked="unCheckCaptor"/>
-                                        </Grid>
-                                    </DataTemplate>
-                                </ListView.ItemTemplate>
-                            </ListView>
-                        </Grid>
+                        <StackPanel Orientation="Vertical">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="15*" />
+                                    <RowDefinition Height="85*" />
+                                </Grid.RowDefinitions>
+
+                                <Label Content="{Binding name}" />
+                                <ListBox ItemsSource="{Binding capteurList}" Grid.Row="1">
+                                    <ListBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <StackPanel Orientation="Vertical">
+                                                <Grid>
+                                                    <CheckBox Content="{Binding description}" IsChecked="{Binding isActivated}" Checked="checkCaptor" Unchecked="unCheckCaptor"/>
+                                                </Grid>
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </ListBox.ItemTemplate>
+                                </ListBox>
+                            </Grid>
+                        </StackPanel>
                     </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
+                </ListBox.ItemTemplate>
+            </ListBox>
         </Grid>
 
         <Grid Name="CenterAndRightGrid" Grid.Column="1">
@@ -44,7 +48,7 @@
                 <ColumnDefinition Width="2.5*" />
             </Grid.ColumnDefinitions>
 
-            <oxy:PlotView x:Name="PlotGraph" Model="{Binding oxyplotgraph}"/>
+            <oxy:PlotView x:Name="PlotGraph" Model="{Binding oxyplotgraph}" />
 
             <Grid Name="RightGrid" Grid.Column="1">
                 <Grid.RowDefinitions>
@@ -52,7 +56,10 @@
                     <RowDefinition Height="1*" />
                     <RowDefinition Height="1*" />
                     <RowDefinition Height="1*" />
-                    <RowDefinition Height="3.5*" />
+                    <RowDefinition Height="1*" />
+                    <RowDefinition Height="1*" />
+                    <RowDefinition Height="1*" />
+                    <RowDefinition Height="0.5*" />
                 </Grid.RowDefinitions>
 
                 <Calendar DisplayDate="{Binding selectedDate}" DisplayDateStart="{Binding netatmoData.start}" DisplayDateEnd="{Binding netatmoData.end}" SelectedDatesChanged="dateHasChanged" />
@@ -61,63 +68,58 @@
                 <TextBox Name="SeuilValue" Grid.Row="2" />
                 <Button Content="Valider" Click="validateSeuil" Grid.Row="3" />
                 <Label Content="Placeholder" Grid.Row="4" />
+                <Grid Grid.Row="6">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <Button Content="Export Mail" Tag="{Binding uriSendMessage}" Click="exportMail" />
+                    <Button Content="Export PNG" Click="exportPNG" Grid.Column="1" />
+                    <Button Content="Export PDF" Grid.Column="2" Click="exportPDF" />
+
+                </Grid>
             </Grid>
         </Grid>
 
         <DockPanel Grid.ColumnSpan="2">
             <Expander DockPanel.Dock="Bottom">
                 <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="9*" />
-                        <RowDefinition Height="1*" />
-                    </Grid.RowDefinitions>
-                    <StackPanel>
-                        <ComboBox SelectionChanged="onSelectedCaptorTypeChanged">
-                            <ComboBoxItem Content="Co2"  />
-                            <ComboBoxItem Content="Humidité" />
-                            <ComboBoxItem Content="Temperature" />
-                            <ComboBoxItem Content="Bruit" />
-                            <ComboBoxItem Content="Pression" />
-                        </ComboBox>
+                    <ListBox ItemsSource="{Binding netatmoData.locationList}" HorizontalContentAlignment="Stretch">
+                        <ListBox.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <UniformGrid Columns="3" />
+                            </ItemsPanelTemplate>
+                        </ListBox.ItemsPanel>
 
-                        <ListBox ItemsSource="{Binding netatmoData.locationList}" HorizontalContentAlignment="Stretch">
-                            <ListBox.ItemsPanel>
-                                <ItemsPanelTemplate>
-                                    <UniformGrid Columns="3" />
-                                </ItemsPanelTemplate>
-                            </ListBox.ItemsPanel>
-
-                            <ListBox.ItemTemplate>
-                                <DataTemplate>
-                                    <StackPanel Orientation="Vertical">
-                                        <Grid>
-                                            <Grid.RowDefinitions>
-                                                <RowDefinition Height="15*" />
-                                                <RowDefinition Height="70*" MinHeight="150" />
-                                                <RowDefinition Height="15*" />
-                                            </Grid.RowDefinitions>
-                                        </Grid>
-                                        <Label Content="{Binding name}" />
-                                        <Label Content="{Binding activatedCapteur}" Grid.Row="1"/>
-                                        <!--<ListBox ItemsSource="{Binding capteurList}" Grid.Row="1">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Vertical">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="Auto" />
+                                        </Grid.RowDefinitions>
+                                    </Grid>
+                                    <Label Content="{Binding name}" />
+                                    <ListBox ItemsSource="{Binding capteurList}" Grid.Row="1">
                                         <ListBox.ItemTemplate>
                                             <DataTemplate>
-                                                <StackPanel Orientation="Horizontal">
+                                                <StackPanel Orientation="Vertical">
                                                     <Grid>
-                                                        <Label Background="{Binding activeMesure}" Content="{Binding id}" />
+                                                        <Label Background="{Binding activeMesure}" Content="{Binding description}" />
                                                     </Grid>
                                                 </StackPanel>
                                             </DataTemplate>
                                         </ListBox.ItemTemplate>
-                                    </ListBox>!-->
-                                        <Label Content="Nombre de personnes :" Grid.Row="2"/>
-                                    </StackPanel>
-                                </DataTemplate>
-                            </ListBox.ItemTemplate>
-                        </ListBox>
-                        <Button Content="Démarrer le timelapse" Height="50" Width="100" Click="startTimeLapse" />
-                    </StackPanel>
-                    
+                                    </ListBox>
+                                    <Label Content="Nombre de personnes :" Grid.Row="2" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
                 </Grid>
             </Expander>
             <Border>

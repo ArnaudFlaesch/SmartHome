@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SmartHome;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,7 +10,7 @@ namespace SmartHome
     public class MainViewModel
     {
         public string NameApp { get; set; }
-        public string selectedTypeCaptor { get; set; }
+        public string uriSendMessage { get; set; }
         public DateTime selectedDate { get; set; }
         public OxyPlotGraph oxyplotgraph { get; set; }
         public NetatmoData netatmoData { get; set; }
@@ -18,7 +19,12 @@ namespace SmartHome
         {
             this.NameApp = "SmartHome";
             this.netatmoData = new NetatmoData(); // parse tous les fichiers dispo, false/true = pour les logs
-        
+            try
+            {
+                this.uriSendMessage = "mailto:?subject=Smarthome";
+            }
+            catch (UriFormatException error) { Console.WriteLine(error); }
+            
             //----------- Partie TimeLapse
             /*
             var tld = this.netatmoData.getTimeLapsDico(new DateTime(2014, 02, 01), new DateTime(2014, 02, 14));
@@ -32,8 +38,15 @@ namespace SmartHome
             //-----------------------------------
 
             this.selectedDate = netatmoData.start;
-            this.selectedTypeCaptor = "";
             this.oxyplotgraph = new OxyPlotGraph();
+        }
+
+        public static void displayLocationColors(double value, string capteurId)
+        {
+            string[] tmp = value.ToString().Split(',');
+            double mesure = Convert.ToDouble(tmp[0]);
+            Console.WriteLine(mesure);
+            Console.WriteLine(capteurId);
         }
     }
 }
