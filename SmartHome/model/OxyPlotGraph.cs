@@ -41,6 +41,7 @@ namespace SmartHome
             DateTime end = selectedDate.AddDays(1);
             end = new DateTime(end.Year, end.Month, end.Day, 0, 0, 0);
             List<Mesure> mesures = capteur.mesureList.FindAll(mesure => mesure.date >= selectedDate && mesure.date < end);
+            mesures.ForEach(x => x.value = x.initial_value);
             //---------- Fonction de Moyenne locales : Deux arguement -> La liste de mesure / le nombre de points a prendre (a gauche et a droite du point courant) pour calculer la moyenne
             transfoMoyennelocal(mesures, amplitude);
             //-------------------------------
