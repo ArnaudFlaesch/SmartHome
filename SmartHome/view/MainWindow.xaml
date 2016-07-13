@@ -84,7 +84,7 @@
                 </Grid>
             </Grid>
         </Grid>
-
+        
         <DockPanel Grid.ColumnSpan="2">
             <Expander DockPanel.Dock="Bottom">
                 <Grid>
@@ -106,25 +106,31 @@
                                         </Grid.RowDefinitions>
                                     </Grid>
                                     <Label Content="{Binding name}" />
-                                    <ListBox ItemsSource="{Binding capteurList}" Grid.Row="1">
+                                    <ListBox ItemsSource="{Binding capteurList}" Grid.Row="1" >
                                         <ListBox.ItemTemplate>
                                             <DataTemplate>
                                                 <StackPanel Orientation="Vertical">
                                                     <Grid>
-                                                        <Label Background="{Binding activeMesure}" Content="{Binding description}" />
+                                                        <Label Background="{Binding activeMesure}" Content="{Binding labelMesure}" />
                                                     </Grid>
                                                 </StackPanel>
                                             </DataTemplate>
                                         </ListBox.ItemTemplate>
                                     </ListBox>
                                     <Label Content="Nombre de personnes :" Grid.Row="2" />
+                                    <Button Content="Lancer TimeLapse" Grid.Row="3" Click="timeLapse" />
                                 </StackPanel>
                             </DataTemplate>
                         </ListBox.ItemTemplate>
                     </ListBox>
                 </Grid>
             </Expander>
+<<<<<<< Updated upstream
             <Border/>
+=======
+            <Border>
+            </Border>
+>>>>>>> Stashed changes
         </DockPanel>
     </Grid>
 </Window>

@@ -23,6 +23,17 @@ namespace SmartHome
         public bool isActivated { get; set; }
 
         private SolidColorBrush _activeMesure;
+        private string _labelMesure;
+
+        public string labelMesure
+        {
+            get { return _labelMesure; }
+            set
+            {
+                _labelMesure = description+" : "+ value;
+                NotifyPropertyChanged();
+            }
+        }
         public SolidColorBrush activeMesure
         {
             get { return _activeMesure; }
@@ -40,6 +51,8 @@ namespace SmartHome
             this.lieu = lieu;
             this.grandeurNom = grandeurNom;
             this.mesureList = new List<Mesure>();
+            this.labelMesure ="";
+            
         }
 
         public void addMesure(Mesure mesure)

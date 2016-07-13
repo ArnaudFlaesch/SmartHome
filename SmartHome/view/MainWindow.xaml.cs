@@ -49,13 +49,6 @@ namespace SmartHome
                 Console.WriteLine(error);
             }
             
-            /*
-            myImage = new Image();
-            BitmapImage myImageSource = new BitmapImage();
-            myImageSource.BeginInit();
-            myImageSource.UriSource = new Uri("images/people_icon.png");
-            myImageSource.EndInit();
-            myImage.Source = myImageSource;*/
         }
 
         /* EVENTS */
@@ -141,6 +134,18 @@ namespace SmartHome
             
              inputDialog.ShowDialog();
             
+        }
+
+        private void timeLapse(object sender, RoutedEventArgs e)
+        {
+            new Thread(() =>
+            {
+                Thread.CurrentThread.IsBackground = true;
+                
+                this.model.playTimeLapse(this.model.selectedDate);
+                
+            }).Start();
+              
         }
     }
 }

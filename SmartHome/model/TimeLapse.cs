@@ -26,11 +26,13 @@ namespace SmartHome
         }
 
 
-        public Dictionary<string, Mesure> executeTimeLapse(Dictionary<string, Capteur> dico, TimeSpan interval, TimeSpan deltaTime, bool debug=false)
+        public Dictionary<string, Mesure> executeTimeLapse(Dictionary<string, Capteur> dico, TimeSpan interval, TimeSpan deltaTime,DateTime end, bool debug=false)
         {
+           
             var snapShotDico = new Dictionary<string, Mesure>();
             var curseurDate = firstDate.Add(TimeSpan.FromTicks(interval.Ticks * numIteration));
-
+            if (curseurDate.CompareTo(end) > 0)
+                return null;
             if (debug)
                 Console.WriteLine("********* Curseur: " + curseurDate + " / Interval: "+ interval+" / DeltaTime: "+deltaTime+" **********");
 
