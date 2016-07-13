@@ -31,7 +31,6 @@ namespace SmartHome
         private double defaultSliderValue = 10;
         public MainViewModel model { get; set; }
         public ImageBrush myImage { get; set; }
-        //public Image myImage2 { get; set; }
 
         public MainWindow()
         {
