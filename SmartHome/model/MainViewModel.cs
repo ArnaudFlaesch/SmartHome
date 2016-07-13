@@ -70,7 +70,7 @@ namespace SmartHome
 
                             capteur.activeMesure = brush;*/
                             capteur.labelMesure = snap[capteur.id].value.ToString();
-                            timeLapseNow = snap[capteur.id].date.ToString();
+                            
                         }
                             
                     }

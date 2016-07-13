@@ -125,12 +125,7 @@
                     </ListBox>
                 </Grid>
             </Expander>
-<<<<<<< Updated upstream
             <Border/>
-=======
-            <Border>
-            </Border>
->>>>>>> Stashed changes
         </DockPanel>
     </Grid>
 </Window>
