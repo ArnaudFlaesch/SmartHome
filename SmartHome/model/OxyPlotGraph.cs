@@ -77,7 +77,7 @@ namespace SmartHome
 
         public void ajouteSeuil(string name, int value)
         {
-            this.Annotations.Add(new RectangleAnnotation { MinimumY = value, Fill = OxyColors.Red, Text = name });
+            this.Annotations.Add(new RectangleAnnotation { MinimumY = value, Fill = OxyColor.FromAColor(50,OxyColors.Red), Text = name });
             this.InvalidatePlot(true);
         }
 
