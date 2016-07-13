@@ -26,6 +26,7 @@ namespace SmartHome
 
     public partial class MainWindow : Window
     {
+        private double defaultSliderValue = 10;
         public MainViewModel model { get; set; }
         public ImageBrush myImage { get; set; }
         //public Image myImage2 { get; set; }
@@ -35,6 +36,7 @@ namespace SmartHome
             this.model = new MainViewModel();
             this.DataContext = model;
             InitializeComponent();
+            this.AmplitudeSlider.Value = this.defaultSliderValue;
 
             try
             {
@@ -65,11 +67,13 @@ namespace SmartHome
         private void checkCaptor(object sender, RoutedEventArgs e)
         {
             this.refreshGraph();
+            this.AmplitudeSlider.Value = this.defaultSliderValue;
         }
 
         private void unCheckCaptor(object sender, RoutedEventArgs e)
         {
             this.refreshGraph();
+            this.AmplitudeSlider.Value = this.defaultSliderValue;
         }
 
         private void refreshGraph()
@@ -82,7 +86,7 @@ namespace SmartHome
                 {
                     if (capteur.isActivated)
                     {
-                        this.model.oxyplotgraph.addMesuresFromCapteur(capteur, this.model.selectedDate);
+                        this.model.oxyplotgraph.addMesuresFromCapteur(capteur, this.model.selectedDate, (int)this.AmplitudeSlider.Value);
                     }
                 }
             }
@@ -92,6 +96,11 @@ namespace SmartHome
         private void validateSeuil(object sender, RoutedEventArgs e)
         {
             this.model.oxyplotgraph.ajouteSeuil(SeuilTextBox.Text, Int32.Parse(SeuilValue.Text));
+        }
+
+        private void OnAmplitudeChange(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            this.refreshGraph();
         }
 
         private void exportPNG(object sender, RoutedEventArgs e)

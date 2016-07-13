@@ -36,13 +36,13 @@ namespace SmartHome
             this.InvalidatePlot(true);
         }
 
-        public void addMesuresFromCapteur(Capteur capteur, DateTime selectedDate)
+        public void addMesuresFromCapteur(Capteur capteur, DateTime selectedDate, int amplitude)
         {
             DateTime end = selectedDate.AddDays(1);
             end = new DateTime(end.Year, end.Month, end.Day, 0, 0, 0);
             List<Mesure> mesures = capteur.mesureList.FindAll(mesure => mesure.date >= selectedDate && mesure.date < end);
             //---------- Fonction de Moyenne locales : Deux arguement -> La liste de mesure / le nombre de points a prendre (a gauche et a droite du point courant) pour calculer la moyenne
-            transfoMoyennelocal(mesures, 10);
+            transfoMoyennelocal(mesures, amplitude);
             //-------------------------------
             LineSeries serie = new LineSeries { Title = capteur.description, Tag = capteur.id };
             foreach (Mesure mesure in mesures)
@@ -66,6 +66,7 @@ namespace SmartHome
                 */
                 foreach (LineSeries displayedSerie in serie.PlotModel.Series)
                 {
+                    var closest = displayedSerie.Points.Min(pt => pt.X);
                     // Avec Linq, chercher le DataPoint ayant le point X le plus proche (between X > 100 & X < 100 par exemple
 
                     //double value = displayedSerie.InverseTransform(e.Position).Y;
@@ -105,13 +106,7 @@ namespace SmartHome
 
         private bool amplitudeOutOfBounds(int currentIndex, int amplitude, int sizeList)
         {
-            if (currentIndex - amplitude < 0 || currentIndex + amplitude >= sizeList)
-            {
-                return true;
-            }
-            
-            return false;
-            
+            return (currentIndex - amplitude < 0 || currentIndex + amplitude >= sizeList);
         }
     }
 }
