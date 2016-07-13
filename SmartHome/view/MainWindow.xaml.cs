@@ -2,12 +2,14 @@
 using OxyPlot;
 using OxyPlot.Series;
 using OxyPlot.Wpf;
-using SmartHome.utils;
+using SmartHome.view;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+
+using System.Net.Mail;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -123,13 +125,13 @@ namespace SmartHome
 
         private void exportMail(object sender, RoutedEventArgs e)
         {
-            var pngExporter = new PngExporter { Height = 600, Width = 900, Background = OxyColors.White };
-            string pathToFile = "../../Data_Oxyplot.png";
-            pngExporter.ExportToFile(this.model.oxyplotgraph, pathToFile);
-            string uri = ((Button)sender).Tag.ToString();
-            Console.WriteLine(uri + "&Attachment=" + pathToFile);
-            Process.Start(uri + "&Attachment=" + pathToFile);
-            e.Handled = true;
+             MailPopUP inputDialog = new MailPopUP();
+             var pngExporter = new PngExporter { Height = 600, Width = 900, Background = OxyColors.White };
+             string pathToFile = "../../Data_Oxyplot.png";
+             pngExporter.ExportToFile(this.model.oxyplotgraph, pathToFile);
+            
+             inputDialog.ShowDialog();
+            
         }
     }
 }
