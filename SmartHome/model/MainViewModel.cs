@@ -43,17 +43,14 @@ namespace SmartHome
            
         }
 
-        public void playTimeLapse(DateTime snapDay)
+        public void playTimeLapse(DateTime snapDay, int interval, int delta)
         {
             var tld = this.netatmoData.getTimeLapsDico(snapDay, snapDay.Add(new TimeSpan(24,0,0)));
             var timelapseTest = new TimeLapse(tld);
             Dictionary<string, Mesure> snap = new Dictionary<string, Mesure>();
             while(true)
             {
-
-               
-                snap = timelapseTest.executeTimeLapse(tld, new TimeSpan(0, 0, 1, 0), new TimeSpan(0, 0, 1, 0), snapDay.Add(new TimeSpan(24, 0, 0)), true);
-
+                snap = timelapseTest.executeTimeLapse(tld, new TimeSpan(0, 0, interval, 0), new TimeSpan(0, 0, delta, 0), snapDay.Add(new TimeSpan(24, 0, 0)), true);
                 if (snap == null)
                     return;
                 foreach (var lieu in netatmoData.locationList)
@@ -76,8 +73,6 @@ namespace SmartHome
                     }
                 }
                 //snap = timelapseTest.executeTimeLapse(tld, new TimeSpan(0, 0, 30, 0), new TimeSpan(0, 1, 0), new DateTime(2014, 02, 5), true);
-             
-
             }
 
 

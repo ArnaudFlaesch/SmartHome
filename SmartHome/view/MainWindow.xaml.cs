@@ -138,14 +138,19 @@ namespace SmartHome
 
         private void timeLapse(object sender, RoutedEventArgs e)
         {
+            TimelapseModal modal = new TimelapseModal(this);
+            modal.Show(); 
+        }
+
+        internal void DoPlayTimelapse(int interval, int delta)
+        {
             new Thread(() =>
             {
                 Thread.CurrentThread.IsBackground = true;
-                
-                this.model.playTimeLapse(this.model.selectedDate);
-                
+
+                this.model.playTimeLapse(this.model.selectedDate, interval, delta);
+
             }).Start();
-              
         }
     }
 }
