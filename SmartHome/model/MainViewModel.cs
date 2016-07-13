@@ -11,17 +11,18 @@ namespace SmartHome
 {
     public class MainViewModel
     {
-        public event PropertyChangedEventHandler PropertyChanged;
-
         public string NameApp { get; set; }
         public string uriSendMessage { get; set; }
         public DateTime selectedDate { get; set; }
         public OxyPlotGraph oxyplotgraph { get; set; }
         public NetatmoData netatmoData { get; set; }
+        public string timeLaspeDateNow { get; set; }
+
 
         public MainViewModel()
         {
             this.NameApp = "SmartHome";
+            this.timeLaspeDateNow = "testdate";
             this.netatmoData = new NetatmoData(); // parse tous les fichiers dispo, false/true = pour les logs
             try
             {

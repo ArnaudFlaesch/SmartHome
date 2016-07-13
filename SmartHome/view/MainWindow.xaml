@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SmartHome" xmlns:oxy="http://oxyplot.org/wpf"
         mc:Ignorable="d" Title="{Binding NameApp}" WindowState="Maximized">
-
+    
     <Grid Name="MainGrid">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="2.5*" />
@@ -87,6 +87,8 @@
         
         <DockPanel Grid.ColumnSpan="2">
             <Expander DockPanel.Dock="Bottom">
+                
+
                 <Grid>
                     <ListBox ItemsSource="{Binding netatmoData.locationList}" HorizontalContentAlignment="Stretch">
                         <ListBox.ItemsPanel>
