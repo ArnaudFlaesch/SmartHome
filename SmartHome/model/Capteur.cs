@@ -34,7 +34,8 @@ namespace SmartHome
                 NotifyPropertyChanged();
             }
         }
-        public SolidColorBrush activeMesure
+
+        public SolidColorBrush activeMesureColor
         {
             get { return _activeMesure; }
             set

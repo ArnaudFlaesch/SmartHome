@@ -1,9 +1,11 @@
 ﻿using SmartHome;
+using SmartHome.utils;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Media;
 
@@ -12,7 +14,6 @@ namespace SmartHome
     public class MainViewModel
     {
         public string NameApp { get; set; }
-        public string uriSendMessage { get; set; }
         public DateTime selectedDate { get; set; }
         public OxyPlotGraph oxyplotgraph { get; set; }
         public NetatmoData netatmoData { get; set; }
@@ -23,25 +24,9 @@ namespace SmartHome
         {
             this.NameApp = "SmartHome";
             this.timeLaspeDateNow = "testdate";
-            this.netatmoData = new NetatmoData(); // parse tous les fichiers dispo, false/true = pour les logs
-            try
-            {
-                this.uriSendMessage = "mailto:?subject=Smarthome";
-            }
-            catch (UriFormatException error) { Console.WriteLine(error); }
-
+            this.netatmoData = new NetatmoData();
             this.selectedDate = netatmoData.start;
             this.oxyplotgraph = new OxyPlotGraph();
-        }
-
-        public static void displayLocationColors(double value, string capteurId)
-        {
-            string[] tmp = value.ToString().Split(',');
-            double mesure = Convert.ToDouble(tmp[0]);
-            Console.WriteLine(mesure);
-            Console.WriteLine(capteurId);
-
-           
         }
 
         public void playTimeLapse(DateTime snapDay, int interval, int delta)
@@ -68,16 +53,12 @@ namespace SmartHome
 
                             capteur.activeMesure = brush;*/
                             capteur.labelMesure = snap[capteur.id].value.ToString();
-                            
+                            capteur.activeMesureColor = DataToColorConverter.fromDataToColor(snap[capteur.id].value, capteur.grandeurNom);
                         }
-                            
                     }
                 }
                 //snap = timelapseTest.executeTimeLapse(tld, new TimeSpan(0, 0, 30, 0), new TimeSpan(0, 1, 0), new DateTime(2014, 02, 5), true);
             }
-
-
         }
-
     }
 }

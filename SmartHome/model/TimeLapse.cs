@@ -34,7 +34,7 @@ namespace SmartHome
             if (curseurDate.CompareTo(end) > 0)
                 return null;
             if (debug)
-                Console.WriteLine("********* Curseur: " + curseurDate + " / Interval: "+ interval+" / DeltaTime: "+deltaTime+" **********");
+                //Console.WriteLine("********* Curseur: " + curseurDate + " / Interval: "+ interval+" / DeltaTime: "+deltaTime+" **********");
 
             foreach (KeyValuePair<string, Capteur> capteur in dico)
             {
@@ -44,7 +44,7 @@ namespace SmartHome
                     if (curseurDate.CompareTo(mDate.date.Add(-deltaTime)) > 0 && curseurDate.CompareTo(mDate.date.Add(deltaTime)) < 0)
                     {
                         if(debug)
-                            Console.WriteLine("{0} --- {1} --- {2}",mDate.date, capteur.Key, mDate.value);
+                            //Console.WriteLine("{0} --- {1} --- {2}",mDate.date, capteur.Key, mDate.value);
                         snapShotDico.Add(capteur.Key, mDate);
                         break;
                     }

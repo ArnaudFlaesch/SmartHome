@@ -79,7 +79,7 @@
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
 
-                    <Button Content="Export Mail" Tag="{Binding uriSendMessage}" Click="exportMail" />
+                    <Button Content="Export Mail" Click="exportMail" />
                     <Button Content="Export PNG" Click="exportPNG" Grid.Column="1" />
                     <Button Content="Export PDF" Grid.Column="2" Click="exportPDF" />
 
@@ -119,7 +119,7 @@
                                                 <DataTemplate>
                                                     <StackPanel Orientation="Vertical">
                                                         <Grid>
-                                                            <Label Background="{Binding activeMesure}" Content="{Binding labelMesure}" />
+                                                            <Label Background="{Binding activeMesureColor}" Content="{Binding labelMesure}" />
                                                         </Grid>
                                                     </StackPanel>
                                                 </DataTemplate>
