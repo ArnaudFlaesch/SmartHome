@@ -11,9 +11,10 @@ namespace SmartHome.utils
     {
         private static double SEUIL_MAX_TEMP = 30;
         private static double SEUIL_MAX_CO2 = 3450;
-        // Les capteurs humidity renvoie déjà un pourcentage
         private static double SEUIL_MAX_NOISE = 35;
-        private static double SEUIL_MAX_RAIN = 0.4;
+        private static double SEUIL_MAX_RAIN = 2;
+        private static double SEUIL_MAX_PRESSURE = 200;
+        private static double SEUIL_MIN_PRESSURE = 900;
         //Manque pression atmosphérique et pluviométre
 
         public static SolidColorBrush fromDataToColor(double value, string typeCapteur)
@@ -27,6 +28,10 @@ namespace SmartHome.utils
                 case "Temperature":
                 {
                     pourcentage = value * 100 / SEUIL_MAX_TEMP;
+                    if (pourcentage == 0)
+                    {
+                        pourcentage = 1;
+                    }
                     blue = (byte)(255 - 2.5 * pourcentage);
                     green = (byte)(255 - 2.5 * pourcentage);
                     break;
@@ -35,6 +40,10 @@ namespace SmartHome.utils
                 case "Co2":
                 {
                     pourcentage = value * 100 / SEUIL_MAX_CO2;
+                    if (pourcentage == 0)
+                    {
+                        pourcentage = 1;
+                    }
                     red = (byte)(255 - 2.5 * pourcentage);
                     blue = (byte)(255 - 2.5 * pourcentage);
                     green = (byte)(255 - 2.5 * pourcentage);
@@ -44,6 +53,10 @@ namespace SmartHome.utils
                 case "Humidité":
                 {
                     pourcentage = value;
+                    if (pourcentage == 0)
+                    {
+                        pourcentage = 1;
+                    }
                     red = (byte)(255 - 2.5 * pourcentage);
                     green = (byte)(255 - ((2.5 * pourcentage) / 2));
                     break;
@@ -51,7 +64,11 @@ namespace SmartHome.utils
 
                 case "Bruit":
                 {
-                    pourcentage = value * 100 / SEUIL_MAX_NOISE;
+                    pourcentage = (value - SEUIL_MAX_NOISE) * 100 / SEUIL_MAX_NOISE;
+                    if (pourcentage == 0)
+                    {
+                        pourcentage = 1;
+                    }
                     blue = (byte)(255 - 2.5 * pourcentage);
                     green = (byte)(255 - 2.5 * pourcentage);
                     break;
@@ -60,18 +77,29 @@ namespace SmartHome.utils
                 case "Pluie":
                 {
                     pourcentage = value * 100 / SEUIL_MAX_RAIN;
-                    blue = (byte)(255 - 2.5 * pourcentage);
+                    if (pourcentage == 0.00)
+                    {
+                        pourcentage = 1;
+                    }
+                    red = (byte)(255 - 2.5 * pourcentage);
                     green = (byte)(255 - 2.5 * pourcentage);
                     break;
                 }
-
+                case "Pression":
+                {
+                    pourcentage = (value - SEUIL_MIN_PRESSURE) * 100 / SEUIL_MAX_PRESSURE;
+                    if (pourcentage == 0.00)
+                    {
+                        pourcentage = 1;
+                    }
+                    red = (byte)(255 - 2.5 * pourcentage);
+                    green = (byte)(255 - 2.5 * pourcentage);
+                    break;
+                }
             }
-            
 
             color = new SolidColorBrush(Color.FromRgb(red, green, blue));
             color.Freeze();
-            //Console.WriteLine(value);
-            //Console.WriteLine(typeCapteur);
             return (color);
         }
     }
