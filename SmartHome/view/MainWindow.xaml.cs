@@ -1,57 +1,33 @@
 ﻿using Microsoft.Win32;
 using OxyPlot;
-using OxyPlot.Series;
 using OxyPlot.Wpf;
-using SmartHome.utils;
+using SmartHome.view;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
-using System.Linq;
-using System.Text;
+
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
+
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+
 
 namespace SmartHome
 {
 
     public partial class MainWindow : Window
     {
+        private double defaultSliderValue = 10;
         public MainViewModel model { get; set; }
         public ImageBrush myImage { get; set; }
-        //public Image myImage2 { get; set; }
 
         public MainWindow()
         {
             this.model = new MainViewModel();
             this.DataContext = model;
             InitializeComponent();
-
-            try
-            {
-                myImage = new ImageBrush(new BitmapImage(new Uri(@"../../images/people_icon.png", UriKind.Relative)));
-            }
-            catch (Exception error)
-            {
-                Console.WriteLine(error);
-            }
-            
-            /*
-            myImage = new Image();
-            BitmapImage myImageSource = new BitmapImage();
-            myImageSource.BeginInit();
-            myImageSource.UriSource = new Uri("images/people_icon.png");
-            myImageSource.EndInit();
-            myImage.Source = myImageSource;*/
+            this.AmplitudeSlider.Value = this.defaultSliderValue;           
         }
 
         /* EVENTS */
@@ -65,11 +41,13 @@ namespace SmartHome
         private void checkCaptor(object sender, RoutedEventArgs e)
         {
             this.refreshGraph();
+            this.AmplitudeSlider.Value = this.defaultSliderValue;
         }
 
         private void unCheckCaptor(object sender, RoutedEventArgs e)
         {
             this.refreshGraph();
+            this.AmplitudeSlider.Value = this.defaultSliderValue;
         }
 
         private void refreshGraph()
@@ -82,7 +60,7 @@ namespace SmartHome
                 {
                     if (capteur.isActivated)
                     {
-                        this.model.oxyplotgraph.addMesuresFromCapteur(capteur, this.model.selectedDate);
+                        this.model.oxyplotgraph.addMesuresFromCapteur(capteur, this.model.selectedDate, (int)this.AmplitudeSlider.Value);
                     }
                 }
             }
@@ -91,7 +69,15 @@ namespace SmartHome
 
         private void validateSeuil(object sender, RoutedEventArgs e)
         {
-            this.model.oxyplotgraph.ajouteSeuil(SeuilTextBox.Text, Int32.Parse(SeuilValue.Text));
+            if (SeuilTextBox.Text.Length != 0 && SeuilValue.Text.Length != 0 && this.model.seuilColor != null)
+            {
+                this.model.oxyplotgraph.ajouteSeuil(SeuilTextBox.Text, Int32.Parse(SeuilValue.Text), this.model.seuilColor);
+            }
+        }
+
+        private void OnAmplitudeChange(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            this.refreshGraph();
         }
 
         private void exportPNG(object sender, RoutedEventArgs e)
@@ -123,13 +109,36 @@ namespace SmartHome
 
         private void exportMail(object sender, RoutedEventArgs e)
         {
-            var pngExporter = new PngExporter { Height = 600, Width = 900, Background = OxyColors.White };
-            string pathToFile = "../../Data_Oxyplot.png";
-            pngExporter.ExportToFile(this.model.oxyplotgraph, pathToFile);
-            string uri = ((Button)sender).Tag.ToString();
-            Console.WriteLine(uri + "&Attachment=" + pathToFile);
-            Process.Start(uri + "&Attachment=" + pathToFile);
-            e.Handled = true;
+             MailPopUP inputDialog = new MailPopUP();
+             var pngExporter = new PngExporter { Height = 600, Width = 900, Background = OxyColors.White };
+             string pathToFile = "../../Data_Oxyplot.png";
+             pngExporter.ExportToFile(this.model.oxyplotgraph, pathToFile);
+            
+             inputDialog.ShowDialog();
+            
+        }
+
+        private void timeLapse(object sender, RoutedEventArgs e)
+        {
+            TimelapseModal modal = new TimelapseModal(this);
+            modal.Show(); 
+        }
+
+        internal void DoPlayTimelapse(int interval, int delta)
+        {
+            new Thread(() =>
+            {
+                Thread.CurrentThread.IsBackground = true;
+
+                this.model.playTimeLapse(this.model.selectedDate, interval, delta);
+
+            }).Start();
+        }
+
+        private void clearSeuils(object sender, RoutedEventArgs e)
+        {
+            this.model.oxyplotgraph.Annotations.Clear();
+            this.model.oxyplotgraph.InvalidatePlot(true);
         }
     }
 }

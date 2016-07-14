@@ -8,6 +8,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media;
 
 namespace SmartHome
 {
@@ -36,48 +37,27 @@ namespace SmartHome
             this.InvalidatePlot(true);
         }
 
-        public void addMesuresFromCapteur(Capteur capteur, DateTime selectedDate)
+        public void addMesuresFromCapteur(Capteur capteur, DateTime selectedDate, int amplitude)
         {
             DateTime end = selectedDate.AddDays(1);
             end = new DateTime(end.Year, end.Month, end.Day, 0, 0, 0);
             List<Mesure> mesures = capteur.mesureList.FindAll(mesure => mesure.date >= selectedDate && mesure.date < end);
+            mesures.ForEach(x => x.value = x.initial_value);
+
             //---------- Fonction de Moyenne locales : Deux arguement -> La liste de mesure / le nombre de points a prendre (a gauche et a droite du point courant) pour calculer la moyenne
-            transfoMoyennelocal(mesures, 10);
-            //-------------------------------
+            transfoMoyennelocal(mesures, amplitude);
+
             LineSeries serie = new LineSeries { Title = capteur.description, Tag = capteur.id };
             foreach (Mesure mesure in mesures)
             {
                 serie.Points.Add(new DataPoint(DateTimeAxis.ToDouble(mesure.date), mesure.value));
             }
             this.Series.Add(serie);
-            serie.MouseDown += (s, e) =>
-            {
-                /*
-                double coordX = ((LineSeries)s).InverseTransform(e.Position).X;
-                Console.WriteLine(coordX);
-                foreach (DataPoint point in serie.Points)
-                {
-                    if (point.X == coordX)
-                    {
-                        Console.WriteLine(point.Y);
-                    }
-                    
-                }
-                */
-                foreach (LineSeries displayedSerie in serie.PlotModel.Series)
-                {
-                    // Avec Linq, chercher le DataPoint ayant le point X le plus proche (between X > 100 & X < 100 par exemple
-
-                    //double value = displayedSerie.InverseTransform(e.Position).Y;
-                    //MainViewModel.displayLocationColors(value, displayedSerie.Tag.ToString());
-                }
-                
-            };
         }
 
-        public void ajouteSeuil(string name, int value)
+        public void ajouteSeuil(string name, int value, Color seuilColor)
         {
-            this.Annotations.Add(new RectangleAnnotation { MinimumY = value, Fill = OxyColors.Red, Text = name });
+            this.Annotations.Add(new RectangleAnnotation { MinimumY = value, MaximumY = value + 100, Fill = OxyColor.FromAColor(50, OxyColor.FromRgb(seuilColor.R, seuilColor.G, seuilColor.B)), Text = name });
             this.InvalidatePlot(true);
         }
 
@@ -105,13 +85,7 @@ namespace SmartHome
 
         private bool amplitudeOutOfBounds(int currentIndex, int amplitude, int sizeList)
         {
-            if (currentIndex - amplitude < 0 || currentIndex + amplitude >= sizeList)
-            {
-                return true;
-            }
-            
-            return false;
-            
+            return (currentIndex - amplitude < 0 || currentIndex + amplitude >= sizeList);
         }
     }
 }

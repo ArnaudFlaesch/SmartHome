@@ -4,8 +4,9 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SmartHome" xmlns:oxy="http://oxyplot.org/wpf"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         mc:Ignorable="d" Title="{Binding NameApp}" WindowState="Maximized">
-    
+
     <Grid Name="MainGrid">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="2.5*" />
@@ -53,78 +54,104 @@
             <Grid Name="RightGrid" Grid.Column="1">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="3.5*" />
-                    <RowDefinition Height="1*" />
-                    <RowDefinition Height="1*" />
-                    <RowDefinition Height="1*" />
-                    <RowDefinition Height="1*" />
-                    <RowDefinition Height="1*" />
-                    <RowDefinition Height="1*" />
                     <RowDefinition Height="0.5*" />
+                    <RowDefinition Height="0.5*" />
+                    <RowDefinition Height="0.5*" />
+                    <RowDefinition Height="0.5*" />
+                    <RowDefinition Height="0.5*" />
+                    <RowDefinition Height="0.5*" />
+                    <RowDefinition Height="3.5*" />
                 </Grid.RowDefinitions>
 
                 <Calendar DisplayDate="{Binding selectedDate}" DisplayDateStart="{Binding netatmoData.start}" DisplayDateEnd="{Binding netatmoData.end}" SelectedDatesChanged="dateHasChanged" />
 
-                <TextBox Name="SeuilTextBox" Grid.Row="1" />
-                <TextBox Name="SeuilValue" Grid.Row="2" />
-                <Button Content="Valider" Click="validateSeuil" Grid.Row="3" />
-                <Label Content="Placeholder" Grid.Row="4" />
-                <Grid Grid.Row="6">
+                <Grid Grid.Row="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <TextBox Text="Nom du seuil" Name="SeuilTextBox" />
+                    <TextBox Text="Valeur du seuil" Name="SeuilValue" Grid.Column="1" />
+                    <xctk:ColorPicker SelectedColor="{Binding seuilColor}" Name="SeuilColorPicker" Grid.Column="2" />
+                    <Button Content="Valider" Click="validateSeuil" Grid.Column="3" />
+                    <Button Content="Enlever tous les seuils" Click="clearSeuils" Grid.Row="4" />
+                </Grid>
+                
+                <Label Content="Lissage de courbe" Grid.Row="2" />
+                <Slider Name="AmplitudeSlider" Grid.Row="3" Maximum="50" SmallChange="1" Value="10" Minimum="1" ValueChanged="OnAmplitudeChange" />
+                
+                
+                <Grid Grid.Row="4">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
 
-                    <Button Content="Export Mail" Tag="{Binding uriSendMessage}" Click="exportMail" />
+                    <Button Content="Export Mail" Click="exportMail" />
                     <Button Content="Export PNG" Click="exportPNG" Grid.Column="1" />
                     <Button Content="Export PDF" Grid.Column="2" Click="exportPDF" />
-
                 </Grid>
+                
+                <Label Content=" " Grid.Row="5" />
+                
             </Grid>
         </Grid>
-
+        
         <DockPanel Grid.ColumnSpan="2">
             <Expander DockPanel.Dock="Bottom">
-                <Grid>
-                    <ListBox ItemsSource="{Binding netatmoData.locationList}" HorizontalContentAlignment="Stretch">
-                        <ListBox.ItemsPanel>
-                            <ItemsPanelTemplate>
-                                <UniformGrid Columns="3" />
-                            </ItemsPanelTemplate>
-                        </ListBox.ItemsPanel>
+                <StackPanel>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
 
-                        <ListBox.ItemTemplate>
-                            <DataTemplate>
-                                <StackPanel Orientation="Vertical">
-                                    <Grid>
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="Auto" />
-                                            <RowDefinition Height="Auto" />
-                                            <RowDefinition Height="Auto" />
-                                        </Grid.RowDefinitions>
-                                    </Grid>
-                                    <Label Content="{Binding name}" />
-                                    <ListBox ItemsSource="{Binding capteurList}" Grid.Row="1">
-                                        <ListBox.ItemTemplate>
-                                            <DataTemplate>
-                                                <StackPanel Orientation="Vertical">
-                                                    <Grid>
-                                                        <Label Background="{Binding activeMesure}" Content="{Binding description}" />
-                                                    </Grid>
-                                                </StackPanel>
-                                            </DataTemplate>
-                                        </ListBox.ItemTemplate>
-                                    </ListBox>
-                                    <Label Content="Nombre de personnes :" Grid.Row="2" />
-                                </StackPanel>
-                            </DataTemplate>
-                        </ListBox.ItemTemplate>
-                    </ListBox>
-                </Grid>
+                        <Button Content="Lancer timelapse" Grid.Row="0" Click="timeLapse" />
+
+                        <ListBox ItemsSource="{Binding netatmoData.locationList}" HorizontalContentAlignment="Stretch" Grid.Row="1">
+                            <ListBox.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <UniformGrid Columns="3" />
+                                </ItemsPanelTemplate>
+                            </ListBox.ItemsPanel>
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Vertical">
+                                        <Grid>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="Auto" />
+                                                <RowDefinition Height="Auto" />
+                                            </Grid.RowDefinitions>
+                                        </Grid>
+                                        <Label Content="{Binding name}" />
+                                        <ListBox ItemsSource="{Binding capteurList}" Grid.Row="1" >
+                                            <ListBox.ItemTemplate>
+                                                <DataTemplate>
+                                                    <StackPanel Orientation="Vertical">
+                                                        <Grid>
+                                                            <Label Background="{Binding activeMesureColor}" Content="{Binding labelMesure}" />
+                                                        </Grid>
+                                                    </StackPanel>
+                                                </DataTemplate>
+                                            </ListBox.ItemTemplate>
+                                        </ListBox>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                    </Grid>
+                </StackPanel>
             </Expander>
-            <Border>
-
-            </Border>
+            <Border/>
         </DockPanel>
     </Grid>
 </Window>

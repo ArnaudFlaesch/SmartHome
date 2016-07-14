@@ -1,1 +1,7 @@
 .vs/
+SmartHome/obj/
+SmartHome/Properties/
+SmartHome/bin/
+SmartHome/App.config
+SmartHome/App.xaml
+SmartHome/App.xaml.cs

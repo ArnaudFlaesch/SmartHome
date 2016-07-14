@@ -61,12 +61,128 @@
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
+<<<<<<< HEAD
+=======
+    <Reference Include="Xceed.Wpf.AvalonDock, Version=3.1.16356.12170, Culture=neutral, PublicKeyToken=ba83ff368b7563c6, processorArchitecture=MSIL">
+      <HintPath>..\packages\Xceed.Wpf.AvalonDock.3.1.16356.12170\lib\net40\Xceed.Wpf.AvalonDock.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Xceed.Wpf.AvalonDock.Themes.Aero, Version=3.1.16356.12170, Culture=neutral, PublicKeyToken=ba83ff368b7563c6, processorArchitecture=MSIL">
+      <HintPath>..\packages\Xceed.Wpf.AvalonDock.Themes.Aero.3.1.16356.12170\lib\net40\Xceed.Wpf.AvalonDock.Themes.Aero.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Xceed.Wpf.AvalonDock.Themes.Metro, Version=3.1.16356.12170, Culture=neutral, PublicKeyToken=ba83ff368b7563c6, processorArchitecture=MSIL">
+      <HintPath>..\packages\Xceed.Wpf.AvalonDock.Themes.Metro.3.1.16356.12170\lib\net40\Xceed.Wpf.AvalonDock.Themes.Metro.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Xceed.Wpf.AvalonDock.Themes.MetroAccent, Version=3.1.16356.12170, Culture=neutral, PublicKeyToken=ba83ff368b7563c6, processorArchitecture=MSIL">
+      <HintPath>..\packages\Xceed.Wpf.AvalonDock.Themes.MetroAccent.3.1.16356.12170\lib\net40\Xceed.Wpf.AvalonDock.Themes.MetroAccent.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Xceed.Wpf.AvalonDock.Themes.Office2007, Version=3.1.16356.12170, Culture=neutral, PublicKeyToken=ba83ff368b7563c6, processorArchitecture=MSIL">
+      <HintPath>..\packages\Xceed.Wpf.AvalonDock.Themes.Office2007.3.1.16356.12170\lib\net40\Xceed.Wpf.AvalonDock.Themes.Office2007.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Xceed.Wpf.AvalonDock.Themes.VS2010, Version=3.1.16356.12170, Culture=neutral, PublicKeyToken=ba83ff368b7563c6, processorArchitecture=MSIL">
+      <HintPath>..\packages\Xceed.Wpf.AvalonDock.Themes.VS2010.3.1.16356.12170\lib\net40\Xceed.Wpf.AvalonDock.Themes.VS2010.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Xceed.Wpf.AvalonDock.Themes.Windows10, Version=3.1.16356.12170, Culture=neutral, PublicKeyToken=ba83ff368b7563c6, processorArchitecture=MSIL">
+      <HintPath>..\packages\Xceed.Wpf.AvalonDock.Themes.Windows10.3.1.16356.12170\lib\net40\Xceed.Wpf.AvalonDock.Themes.Windows10.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Xceed.Wpf.DataGrid, Version=3.1.16356.12170, Culture=neutral, PublicKeyToken=ba83ff368b7563c6, processorArchitecture=MSIL">
+      <HintPath>..\packages\Xceed.Wpf.DataGrid_Toolkit.3.1.16356.12170\lib\net40\Xceed.Wpf.DataGrid.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Xceed.Wpf.DataGrid.Themes.Metro, Version=3.1.16356.12170, Culture=neutral, PublicKeyToken=ba83ff368b7563c6, processorArchitecture=MSIL">
+      <HintPath>..\packages\Xceed.Wpf.DataGrid.Themes.Metro.3.1.16356.12170\lib\net40\Xceed.Wpf.DataGrid.Themes.Metro.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Xceed.Wpf.DataGrid.Themes.Office2007, Version=3.1.16356.12170, Culture=neutral, PublicKeyToken=ba83ff368b7563c6, processorArchitecture=MSIL">
+      <HintPath>..\packages\Xceed.Wpf.DataGrid.Themes.Office2007.3.1.16356.12170\lib\net40\Xceed.Wpf.DataGrid.Themes.Office2007.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Xceed.Wpf.DataGrid.Themes.Windows10, Version=3.1.16356.12170, Culture=neutral, PublicKeyToken=ba83ff368b7563c6, processorArchitecture=MSIL">
+      <HintPath>..\packages\Xceed.Wpf.DataGrid.Themes.Windows10.3.1.16356.12170\lib\net40\Xceed.Wpf.DataGrid.Themes.Windows10.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Xceed.Wpf.ListBox, Version=3.1.16356.12170, Culture=neutral, PublicKeyToken=ba83ff368b7563c6, processorArchitecture=MSIL">
+      <HintPath>..\packages\Xceed.Wpf.ListBox.3.1.16356.12170\lib\net40\Xceed.Wpf.ListBox.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Xceed.Wpf.ListBox.Themes.LiveExplorer, Version=3.1.16356.12170, Culture=neutral, PublicKeyToken=ba83ff368b7563c6, processorArchitecture=MSIL">
+      <HintPath>..\packages\Xceed.Wpf.ListBox.Themes.LiveExplorer.3.1.16356.12170\lib\net40\Xceed.Wpf.ListBox.Themes.LiveExplorer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Xceed.Wpf.ListBox.Themes.Metro, Version=3.1.16356.12170, Culture=neutral, PublicKeyToken=ba83ff368b7563c6, processorArchitecture=MSIL">
+      <HintPath>..\packages\Xceed.Wpf.ListBox.Themes.Metro.3.1.16356.12170\lib\net40\Xceed.Wpf.ListBox.Themes.Metro.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Xceed.Wpf.ListBox.Themes.Office2007, Version=3.1.16356.12170, Culture=neutral, PublicKeyToken=ba83ff368b7563c6, processorArchitecture=MSIL">
+      <HintPath>..\packages\Xceed.Wpf.ListBox.Themes.Office2007.3.1.16356.12170\lib\net40\Xceed.Wpf.ListBox.Themes.Office2007.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Xceed.Wpf.ListBox.Themes.Windows10, Version=3.1.16356.12170, Culture=neutral, PublicKeyToken=ba83ff368b7563c6, processorArchitecture=MSIL">
+      <HintPath>..\packages\Xceed.Wpf.ListBox.Themes.Windows10.3.1.16356.12170\lib\net40\Xceed.Wpf.ListBox.Themes.Windows10.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Xceed.Wpf.ListBox.Themes.WMP11, Version=3.1.16356.12170, Culture=neutral, PublicKeyToken=ba83ff368b7563c6, processorArchitecture=MSIL">
+      <HintPath>..\packages\Xceed.Wpf.ListBox.Themes.WMP11.3.1.16356.12170\lib\net40\Xceed.Wpf.ListBox.Themes.WMP11.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Xceed.Wpf.Themes, Version=3.1.16356.12170, Culture=neutral, PublicKeyToken=ba83ff368b7563c6, processorArchitecture=MSIL">
+      <HintPath>..\packages\Xceed.Wpf.Themes.3.1.16356.12170\lib\net40\Xceed.Wpf.Themes.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Xceed.Wpf.Themes.Metro, Version=3.1.16356.12170, Culture=neutral, PublicKeyToken=ba83ff368b7563c6, processorArchitecture=MSIL">
+      <HintPath>..\packages\Xceed.Wpf.Themes.Metro.3.1.16356.12170\lib\net40\Xceed.Wpf.Themes.Metro.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Xceed.Wpf.Themes.Office2007, Version=3.1.16356.12170, Culture=neutral, PublicKeyToken=ba83ff368b7563c6, processorArchitecture=MSIL">
+      <HintPath>..\packages\Xceed.Wpf.Themes.Office2007.3.1.16356.12170\lib\net40\Xceed.Wpf.Themes.Office2007.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Xceed.Wpf.Themes.Windows10, Version=3.1.16356.12170, Culture=neutral, PublicKeyToken=ba83ff368b7563c6, processorArchitecture=MSIL">
+      <HintPath>..\packages\Xceed.Wpf.Themes.Windows10.3.1.16356.12170\lib\net40\Xceed.Wpf.Themes.Windows10.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Xceed.Wpf.Toolkit, Version=3.1.16356.12170, Culture=neutral, PublicKeyToken=ba83ff368b7563c6, processorArchitecture=MSIL">
+      <HintPath>..\packages\Xceed.Wpf.Toolkit.3.1.16356.12170\lib\net40\Xceed.Wpf.Toolkit.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Xceed.Wpf.Toolkit.Themes.Metro, Version=3.1.16356.12170, Culture=neutral, PublicKeyToken=ba83ff368b7563c6, processorArchitecture=MSIL">
+      <HintPath>..\packages\Xceed.Wpf.Toolkit.Themes.Metro.3.1.16356.12170\lib\net40\Xceed.Wpf.Toolkit.Themes.Metro.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Xceed.Wpf.Toolkit.Themes.Office2007, Version=3.1.16356.12170, Culture=neutral, PublicKeyToken=ba83ff368b7563c6, processorArchitecture=MSIL">
+      <HintPath>..\packages\Xceed.Wpf.Toolkit.Themes.Office2007.3.1.16356.12170\lib\net40\Xceed.Wpf.Toolkit.Themes.Office2007.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Xceed.Wpf.Toolkit.Themes.Windows10, Version=0.0.0.0, Culture=neutral, PublicKeyToken=ba83ff368b7563c6, processorArchitecture=MSIL">
+      <HintPath>..\packages\Xceed.Wpf.Toolkit.Themes.Windows10.3.1.16356.12170\lib\net40\Xceed.Wpf.Toolkit.Themes.Windows10.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+>>>>>>> beta
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+<<<<<<< HEAD
+=======
+    <Compile Include="utils\DataToColorConverter.cs" />
+    <Compile Include="view\ObjetValidator.cs" />
+    <Compile Include="view\MailValidator.cs" />
+    <Compile Include="view\TimelapseModal.xaml.cs">
+      <DependentUpon>TimelapseModal.xaml</DependentUpon>
+    </Compile>
+    <Page Include="view\MailPopUP.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+>>>>>>> beta
     <Page Include="view\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -78,14 +194,30 @@
     <Compile Include="model\Capteur.cs" />
     <Compile Include="model\Lieu.cs" />
     <Compile Include="model\MainViewModel.cs" />
+<<<<<<< HEAD
     <Compile Include="model\NetatmoData.cs" />
     <Compile Include="model\TimeLapse.cs" />
     <Compile Include="SeuilValidator.cs" />
     <Compile Include="utils\DataToColorConverter.cs" />
+=======
+    <Compile Include="model\MAPI.cs" />
+    <Compile Include="model\NetatmoData.cs" />
+    <Compile Include="model\TimeLapse.cs" />
+    <Compile Include="view\MailPopUP.xaml.cs">
+      <DependentUpon>MailPopUP.xaml</DependentUpon>
+    </Compile>
+>>>>>>> beta
     <Compile Include="view\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+<<<<<<< HEAD
+=======
+    <Page Include="view\TimelapseModal.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+>>>>>>> beta
   </ItemGroup>
   <ItemGroup>
     <Compile Include="model\Mesure.cs" />
@@ -107,6 +239,255 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+<<<<<<< HEAD
+=======
+    <None Include="App.config" />
+    <None Include="capteurs.xtim" />
+    <None Include="netatmo\20140131.dt" />
+    <None Include="netatmo\20140201.dt" />
+    <None Include="netatmo\20140202.dt" />
+    <None Include="netatmo\20140203.dt" />
+    <None Include="netatmo\20140204.dt" />
+    <None Include="netatmo\20140205.dt" />
+    <None Include="netatmo\20140206.dt" />
+    <None Include="netatmo\20140207.dt" />
+    <None Include="netatmo\20140208.dt" />
+    <None Include="netatmo\20140209.dt" />
+    <None Include="netatmo\20140210.dt" />
+    <None Include="netatmo\20140211.dt" />
+    <None Include="netatmo\20140212.dt" />
+    <None Include="netatmo\20140213.dt" />
+    <None Include="netatmo\20140214.dt" />
+    <None Include="netatmo\20140215.dt" />
+    <None Include="netatmo\20140216.dt" />
+    <None Include="netatmo\20140217.dt" />
+    <None Include="netatmo\20140218.dt" />
+    <None Include="netatmo\20140219.dt" />
+    <None Include="netatmo\20140220.dt" />
+    <None Include="netatmo\20140221.dt" />
+    <None Include="netatmo\20140222.dt" />
+    <None Include="netatmo\20140223.dt" />
+    <None Include="netatmo\20140224.dt" />
+    <None Include="netatmo\20140225.dt" />
+    <None Include="netatmo\20140226.dt" />
+    <None Include="netatmo\20140227.dt" />
+    <None Include="netatmo\20140228.dt" />
+    <None Include="netatmo\20140301.dt" />
+    <None Include="netatmo\20140302.dt" />
+    <None Include="netatmo\20140303.dt" />
+    <None Include="netatmo\20140304.dt" />
+    <None Include="netatmo\20140305.dt" />
+    <None Include="netatmo\20140306.dt" />
+    <None Include="netatmo\20140307.dt" />
+    <None Include="netatmo\20140308.dt" />
+    <None Include="netatmo\20140309.dt" />
+    <None Include="netatmo\20140310.dt" />
+    <None Include="netatmo\20140311.dt" />
+    <None Include="netatmo\20140312.dt" />
+    <None Include="netatmo\20140313.dt" />
+    <None Include="netatmo\20140314.dt" />
+    <None Include="netatmo\20140315.dt" />
+    <None Include="netatmo\20140316.dt" />
+    <None Include="netatmo\20140317.dt" />
+    <None Include="netatmo\20140318.dt" />
+    <None Include="netatmo\20140319.dt" />
+    <None Include="netatmo\20140320.dt" />
+    <None Include="netatmo\20140321.dt" />
+    <None Include="netatmo\20140322.dt" />
+    <None Include="netatmo\20140323.dt" />
+    <None Include="netatmo\20140324.dt" />
+    <None Include="netatmo\20140325.dt" />
+    <None Include="netatmo\20140326.dt" />
+    <None Include="netatmo\20140327.dt" />
+    <None Include="netatmo\20140328.dt" />
+    <None Include="netatmo\20140329.dt" />
+    <None Include="netatmo\20140330.dt" />
+    <None Include="netatmo\20140331.dt" />
+    <None Include="netatmo\20140401.dt" />
+    <None Include="netatmo\20140402.dt" />
+    <None Include="netatmo\20140403.dt" />
+    <None Include="netatmo\20140404.dt" />
+    <None Include="netatmo\20140405.dt" />
+    <None Include="netatmo\20140406.dt" />
+    <None Include="netatmo\20140407.dt" />
+    <None Include="netatmo\20140408.dt" />
+    <None Include="netatmo\20140409.dt" />
+    <None Include="netatmo\20140410.dt" />
+    <None Include="netatmo\20140411.dt" />
+    <None Include="netatmo\20140412.dt" />
+    <None Include="netatmo\20140413.dt" />
+    <None Include="netatmo\20140414.dt" />
+    <None Include="netatmo\20140415.dt" />
+    <None Include="netatmo\20140416.dt" />
+    <None Include="netatmo\20140417.dt" />
+    <None Include="netatmo\20140418.dt" />
+    <None Include="netatmo\20140419.dt" />
+    <None Include="netatmo\20140420.dt" />
+    <None Include="netatmo\20140421.dt" />
+    <None Include="netatmo\20140422.dt" />
+    <None Include="netatmo\20140423.dt" />
+    <None Include="netatmo\20140424.dt" />
+    <None Include="netatmo\20140425.dt" />
+    <None Include="netatmo\20140426.dt" />
+    <None Include="netatmo\20140427.dt" />
+    <None Include="netatmo\20140428.dt" />
+    <None Include="netatmo\20140429.dt" />
+    <None Include="netatmo\20140430.dt" />
+    <None Include="netatmo\20140501.dt" />
+    <None Include="netatmo\20140502.dt" />
+    <None Include="netatmo\20140503.dt" />
+    <None Include="netatmo\20140504.dt" />
+    <None Include="netatmo\20140505.dt" />
+    <None Include="netatmo\20140506.dt" />
+    <None Include="netatmo\20140507.dt" />
+    <None Include="netatmo\20140508.dt" />
+    <None Include="netatmo\20140509.dt" />
+    <None Include="netatmo\20140510.dt" />
+    <None Include="netatmo\20140511.dt" />
+    <None Include="netatmo\20140512.dt" />
+    <None Include="netatmo\20140513.dt" />
+    <None Include="netatmo\20140514.dt" />
+    <None Include="netatmo\20140515.dt" />
+    <None Include="netatmo\20140516.dt" />
+    <None Include="netatmo\20140517.dt" />
+    <None Include="netatmo\20140518.dt" />
+    <None Include="netatmo\20140519.dt" />
+    <None Include="netatmo\20140520.dt" />
+    <None Include="netatmo\20140521.dt" />
+    <None Include="netatmo\20140522.dt" />
+    <None Include="netatmo\20140523.dt" />
+    <None Include="netatmo\20140524.dt" />
+    <None Include="netatmo\20140525.dt" />
+    <None Include="netatmo\20140526.dt" />
+    <None Include="netatmo\20140527.dt" />
+    <None Include="netatmo\20140528.dt" />
+    <None Include="netatmo\20140529.dt" />
+    <None Include="netatmo\20140530.dt" />
+    <None Include="netatmo\20140531.dt" />
+    <None Include="netatmo\20140601.dt" />
+    <None Include="netatmo\20140602.dt" />
+    <None Include="netatmo\20140603.dt" />
+    <None Include="netatmo\20140604.dt" />
+    <None Include="netatmo\20140605.dt" />
+    <None Include="netatmo\20140606.dt" />
+    <None Include="netatmo\20140607.dt" />
+    <None Include="netatmo\20140608.dt" />
+    <None Include="netatmo\20140609.dt" />
+    <None Include="netatmo\20140610.dt" />
+    <None Include="netatmo\20140611.dt" />
+    <None Include="netatmo\20140612.dt" />
+    <None Include="netatmo\20140613.dt" />
+    <None Include="netatmo\20140614.dt" />
+    <None Include="netatmo\20140615.dt" />
+    <None Include="netatmo\20140616.dt" />
+    <None Include="netatmo\20140617.dt" />
+    <None Include="netatmo\20140618.dt" />
+    <None Include="netatmo\20140619.dt" />
+    <None Include="netatmo\20140620.dt" />
+    <None Include="netatmo\20140621.dt" />
+    <None Include="netatmo\20140622.dt" />
+    <None Include="netatmo\20140623.dt" />
+    <None Include="netatmo\20140624.dt" />
+    <None Include="netatmo\20140625.dt" />
+    <None Include="netatmo\20140626.dt" />
+    <None Include="netatmo\20140627.dt" />
+    <None Include="netatmo\20140628.dt" />
+    <None Include="netatmo\20140629.dt" />
+    <None Include="netatmo\20140630.dt" />
+    <None Include="netatmo\20140701.dt" />
+    <None Include="netatmo\20140702.dt" />
+    <None Include="netatmo\20140703.dt" />
+    <None Include="netatmo\20140704.dt" />
+    <None Include="netatmo\20140705.dt" />
+    <None Include="netatmo\20140706.dt" />
+    <None Include="netatmo\20140707.dt" />
+    <None Include="netatmo\20140708.dt" />
+    <None Include="netatmo\20140709.dt" />
+    <None Include="netatmo\20140710.dt" />
+    <None Include="netatmo\20140711.dt" />
+    <None Include="netatmo\20140712.dt" />
+    <None Include="netatmo\20140713.dt" />
+    <None Include="netatmo\20140714.dt" />
+    <None Include="netatmo\20140715.dt" />
+    <None Include="netatmo\20140716.dt" />
+    <None Include="netatmo\20140717.dt" />
+    <None Include="netatmo\20140718.dt" />
+    <None Include="netatmo\20140719.dt" />
+    <None Include="netatmo\20140720.dt" />
+    <None Include="netatmo\20140721.dt" />
+    <None Include="netatmo\20140722.dt" />
+    <None Include="netatmo\20140723.dt" />
+    <None Include="netatmo\20140724.dt" />
+    <None Include="netatmo\20140725.dt" />
+    <None Include="netatmo\20140726.dt" />
+    <None Include="netatmo\20140727.dt" />
+    <None Include="netatmo\20140728.dt" />
+    <None Include="netatmo\20140729.dt" />
+    <None Include="netatmo\20140730.dt" />
+    <None Include="netatmo\20140731.dt" />
+    <None Include="netatmo\20140801.dt" />
+    <None Include="netatmo\20140802.dt" />
+    <None Include="netatmo\20140803.dt" />
+    <None Include="netatmo\20140804.dt" />
+    <None Include="netatmo\20140805.dt" />
+    <None Include="netatmo\20140806.dt" />
+    <None Include="netatmo\20140807.dt" />
+    <None Include="netatmo\20140808.dt" />
+    <None Include="netatmo\20140809.dt" />
+    <None Include="netatmo\20140810.dt" />
+    <None Include="netatmo\20140811.dt" />
+    <None Include="netatmo\20140812.dt" />
+    <None Include="netatmo\20140813.dt" />
+    <None Include="netatmo\20140814.dt" />
+    <None Include="netatmo\20140815.dt" />
+    <None Include="netatmo\20140816.dt" />
+    <None Include="netatmo\20140817.dt" />
+    <None Include="netatmo\20140818.dt" />
+    <None Include="netatmo\20140819.dt" />
+    <None Include="netatmo\20140820.dt" />
+    <None Include="netatmo\20140821.dt" />
+    <None Include="netatmo\20140822.dt" />
+    <None Include="netatmo\20140823.dt" />
+    <None Include="netatmo\20140824.dt" />
+    <None Include="netatmo\20140825.dt" />
+    <None Include="netatmo\20140826.dt" />
+    <None Include="netatmo\20140827.dt" />
+    <None Include="netatmo\20140828.dt" />
+    <None Include="netatmo\20140829.dt" />
+    <None Include="netatmo\20140830.dt" />
+    <None Include="netatmo\20140831.dt" />
+    <None Include="netatmo\20140901.dt" />
+    <None Include="netatmo\20140902.dt" />
+    <None Include="netatmo\20140903.dt" />
+    <None Include="netatmo\20140904.dt" />
+    <None Include="netatmo\20140905.dt" />
+    <None Include="netatmo\20140906.dt" />
+    <None Include="netatmo\20140907.dt" />
+    <None Include="netatmo\20140908.dt" />
+    <None Include="netatmo\20140909.dt" />
+    <None Include="netatmo\20140910.dt" />
+    <None Include="netatmo\20140911.dt" />
+    <None Include="netatmo\20140912.dt" />
+    <None Include="netatmo\20140913.dt" />
+    <None Include="netatmo\20140914.dt" />
+    <None Include="netatmo\20140915.dt" />
+    <None Include="netatmo\20140916.dt" />
+    <None Include="netatmo\20140917.dt" />
+    <None Include="netatmo\20140918.dt" />
+    <None Include="netatmo\20140919.dt" />
+    <None Include="netatmo\20140920.dt" />
+    <None Include="netatmo\20140921.dt" />
+    <None Include="netatmo\20140922.dt" />
+    <None Include="netatmo\20140923.dt" />
+    <None Include="netatmo\20140924.dt" />
+    <None Include="netatmo\20140925.dt" />
+    <None Include="netatmo\20140926.dt" />
+    <None Include="netatmo\20140927.dt" />
+    <None Include="netatmo\20140928.dt" />
+    <None Include="netatmo\20140929.dt" />
+    <None Include="netatmo\20140930.dt" />
+    <None Include="netatmo\20141001.dt" />
+>>>>>>> beta
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -115,9 +496,12 @@
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
+<<<<<<< HEAD
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+=======
+>>>>>>> beta
     <Resource Include="images\people_icon.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
