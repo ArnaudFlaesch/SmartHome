@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SmartHome" xmlns:oxy="http://oxyplot.org/wpf"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         mc:Ignorable="d" Title="{Binding NameApp}" WindowState="Maximized">
 
     <Grid Name="MainGrid">
@@ -65,7 +66,13 @@
                 <Calendar DisplayDate="{Binding selectedDate}" DisplayDateStart="{Binding netatmoData.start}" DisplayDateEnd="{Binding netatmoData.end}" SelectedDatesChanged="dateHasChanged" />
 
                 <Grid Grid.Row="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    
                     <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="*" />
@@ -73,7 +80,9 @@
 
                     <TextBox Text="Nom du seuil" Name="SeuilTextBox" />
                     <TextBox Text="Valeur du seuil" Name="SeuilValue" Grid.Column="1" />
-                    <Button Content="Valider" Click="validateSeuil" Grid.Column="2" />
+                    <xctk:ColorPicker SelectedColor="{Binding seuilColor}" Name="SeuilColorPicker" Grid.Column="2" />
+                    <Button Content="Valider" Click="validateSeuil" Grid.Column="3" />
+                    <Button Content="Enlever tous les seuils" Click="clearSeuils" Grid.Row="4" />
                 </Grid>
                 
                 <Label Content="Lissage de courbe" Grid.Row="2" />
@@ -103,11 +112,12 @@
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
                         </Grid.RowDefinitions>
+
                         <Button Content="Lancer timelapse" Grid.Row="0" Click="timeLapse" />
-                    </Grid>
-                    <Grid>
-                        <ListBox ItemsSource="{Binding netatmoData.locationList}" HorizontalContentAlignment="Stretch">
+
+                        <ListBox ItemsSource="{Binding netatmoData.locationList}" HorizontalContentAlignment="Stretch" Grid.Row="1">
                             <ListBox.ItemsPanel>
                                 <ItemsPanelTemplate>
                                     <UniformGrid Columns="3" />
@@ -118,7 +128,6 @@
                                     <StackPanel Orientation="Vertical">
                                         <Grid>
                                             <Grid.RowDefinitions>
-                                                <RowDefinition Height="Auto" />
                                                 <RowDefinition Height="Auto" />
                                                 <RowDefinition Height="Auto" />
                                             </Grid.RowDefinitions>
@@ -135,7 +144,6 @@
                                                 </DataTemplate>
                                             </ListBox.ItemTemplate>
                                         </ListBox>
-                                        <Label Content="Nombre de personnes :" Grid.Row="2" />
                                     </StackPanel>
                                 </DataTemplate>
                             </ListBox.ItemTemplate>

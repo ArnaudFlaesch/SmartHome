@@ -22,27 +22,26 @@ namespace SmartHome
         public List<Mesure> mesureList;
         public bool isActivated { get; set; }
 
-        private SolidColorBrush _activeMesure;
         private string _labelMesure;
-
         public string labelMesure
         {
             get { return _labelMesure; }
-            set
-            {
-                _labelMesure = description+" : "+ value;
-                NotifyPropertyChanged();
+            set { _labelMesure = description+" : "+ value; NotifyPropertyChanged();
             }
         }
 
+        private SolidColorBrush _activeMesure;
         public SolidColorBrush activeMesureColor
         {
             get { return _activeMesure; }
-            set
-            {
-                _activeMesure = value;
-                NotifyPropertyChanged();
-            }
+            set { _activeMesure = value; NotifyPropertyChanged(); }
+        }
+
+        private string _peopleCount;
+        public string peopleCount
+        {
+            get { return _peopleCount; }
+            set { _peopleCount = "Nombre de personnes : " + " : " + value; NotifyPropertyChanged(); }
         }
 
         public Capteur(string id, string description, string lieu, string grandeurNom)

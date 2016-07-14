@@ -1,27 +1,17 @@
 ﻿using Microsoft.Win32;
 using OxyPlot;
-using OxyPlot.Series;
 using OxyPlot.Wpf;
 using SmartHome.view;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
-using System.Linq;
 
-using System.Net.Mail;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
+
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+
 
 namespace SmartHome
 {
@@ -37,17 +27,7 @@ namespace SmartHome
             this.model = new MainViewModel();
             this.DataContext = model;
             InitializeComponent();
-            this.AmplitudeSlider.Value = this.defaultSliderValue;
-
-            try
-            {
-                myImage = new ImageBrush(new BitmapImage(new Uri(@"../../images/people_icon.png", UriKind.Relative)));
-            }
-            catch (Exception error)
-            {
-                Console.WriteLine(error);
-            }
-            
+            this.AmplitudeSlider.Value = this.defaultSliderValue;           
         }
 
         /* EVENTS */
@@ -89,7 +69,10 @@ namespace SmartHome
 
         private void validateSeuil(object sender, RoutedEventArgs e)
         {
-            this.model.oxyplotgraph.ajouteSeuil(SeuilTextBox.Text, Int32.Parse(SeuilValue.Text));
+            if (SeuilTextBox.Text.Length != 0 && SeuilValue.Text.Length != 0 && this.model.seuilColor != null)
+            {
+                this.model.oxyplotgraph.ajouteSeuil(SeuilTextBox.Text, Int32.Parse(SeuilValue.Text), this.model.seuilColor);
+            }
         }
 
         private void OnAmplitudeChange(object sender, RoutedPropertyChangedEventArgs<double> e)
@@ -150,6 +133,12 @@ namespace SmartHome
                 this.model.playTimeLapse(this.model.selectedDate, interval, delta);
 
             }).Start();
+        }
+
+        private void clearSeuils(object sender, RoutedEventArgs e)
+        {
+            this.model.oxyplotgraph.Annotations.Clear();
+            this.model.oxyplotgraph.InvalidatePlot(true);
         }
     }
 }
