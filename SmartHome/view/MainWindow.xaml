@@ -82,7 +82,7 @@
                     <TextBox Text="Valeur du seuil" Name="SeuilValue" Grid.Column="1" />
                     <xctk:ColorPicker SelectedColor="{Binding seuilColor}" Name="SeuilColorPicker" Grid.Column="2" />
                     <Button Content="Valider" Click="validateSeuil" Grid.Column="3" />
-                    <Button Content="Enlever tous les seuils" Click="clearSeuils" Grid.Row="4" />
+                    <Button Content="Enlever tous les seuils" Click="clearSeuils" Grid.ColumnSpan="2" Grid.Row="4" />
                 </Grid>
                 
                 <Label Content="Lissage de courbe" Grid.Row="2" />
@@ -113,9 +113,10 @@
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
                             <RowDefinition Height="Auto" />
+                            
                         </Grid.RowDefinitions>
 
-                        <Button Content="Lancer timelapse" Grid.Row="0" Click="timeLapse" />
+                        <Button Content="{Binding timeLaspeDateNow.dateTimeLapse}" Grid.Row="0" Click="timeLapse" />
 
                         <ListBox ItemsSource="{Binding netatmoData.locationList}" HorizontalContentAlignment="Stretch" Grid.Row="1">
                             <ListBox.ItemsPanel>
@@ -144,6 +145,7 @@
                                                 </DataTemplate>
                                             </ListBox.ItemTemplate>
                                         </ListBox>
+                                        <Label  Content="{Binding concentrationC02}" />
                                     </StackPanel>
                                 </DataTemplate>
                             </ListBox.ItemTemplate>

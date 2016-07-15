@@ -28,7 +28,7 @@ namespace SmartHome.view
 
         private void DoPlayTimelapse(object sender, RoutedEventArgs e)
         {
-            this._mainView.DoPlayTimelapse((int)this.IntervalSlider.Value, (int)this.DeltaSlider.Value);
+            this._mainView.DoPlayTimelapse((int)this.IntervalSlider.Value, (int)this.DeltaSlider.Value, (int)this.WaitTime.Value);
             this.Close();
         }
     }
