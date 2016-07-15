@@ -167,6 +167,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="model\DateTimeLapse.cs" />
     <Compile Include="utils\DataToColorConverter.cs" />
     <Compile Include="view\ObjetValidator.cs" />
     <Compile Include="view\MailValidator.cs" />

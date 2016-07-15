@@ -124,13 +124,14 @@ namespace SmartHome
             modal.Show(); 
         }
 
-        internal void DoPlayTimelapse(int interval, int delta)
+        internal void DoPlayTimelapse(int interval, int delta, int waitTime)
         {
+            
             new Thread(() =>
             {
                 Thread.CurrentThread.IsBackground = true;
 
-                this.model.playTimeLapse(this.model.selectedDate, interval, delta);
+                this.model.playTimeLapse(this.model.selectedDate, interval, delta, waitTime);
 
             }).Start();
         }

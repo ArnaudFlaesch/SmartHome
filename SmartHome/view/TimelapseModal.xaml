@@ -9,8 +9,11 @@
     <Grid>
 
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="2*" />
-            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="93*" />
+            <ColumnDefinition Width="93*" />
+            <ColumnDefinition Width="138*" />
+            <ColumnDefinition Width="75*" />
+            <ColumnDefinition Width="65*" />
         </Grid.ColumnDefinitions>
 
         <Grid.RowDefinitions>
@@ -20,47 +23,74 @@
             <RowDefinition />
             <RowDefinition />
             <RowDefinition />
-            <RowDefinition Height="Auto" />
+
+            <RowDefinition  />
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
         <Grid Grid.Row="0"
-          Grid.Column="0"
+          Grid.Column="2"
           Grid.ColumnSpan="2">
-            <Label Content="Interval:"></Label>
+            <Label Content="TimeLapse Config" FontWeight="Bold" ></Label>
         </Grid>
 
         <Grid Grid.Row="1"
-          Grid.Column="0"
+          Grid.Column="1"
+          Grid.ColumnSpan="2">
+            <Label Content="Interval entre les Snapshots (min) :" FontWeight="Bold"></Label>
+        </Grid>
+
+        <Grid Grid.Row="1"
+          Grid.Column="3"
           Grid.ColumnSpan="2">
             <Label Content="{Binding ElementName=IntervalSlider,Path=Value}"></Label>
         </Grid>
 
         <Grid Grid.Row="2"
-          Grid.Column="0"
-          Grid.ColumnSpan="2">
+          Grid.Column="1"
+          Grid.ColumnSpan="3">
             <Slider x:Name="IntervalSlider" SmallChange="1" Maximum="60" Minimum="1" Value="1" IsSnapToTickEnabled="True"></Slider>
         </Grid>
 
         <Grid Grid.Row="3"
-          Grid.Column="0"
+          Grid.Column="1"
           Grid.ColumnSpan="2">
-            <Label Content="Delta:"></Label>
+            <Label Content="Delta temps (min) :" FontWeight="Bold"></Label>
         </Grid>
 
-        <Grid Grid.Row="4"
-          Grid.Column="0"
+        <Grid Grid.Row="3"
+          Grid.Column="3"
           Grid.ColumnSpan="2">
             <Label Content="{Binding ElementName=DeltaSlider,Path=Value}"></Label>
         </Grid>
 
-        <Grid Grid.Row="5"
-          Grid.Column="0"
-          Grid.ColumnSpan="2">
+        <Grid Grid.Row="4"
+          Grid.Column="1"
+          Grid.ColumnSpan="3">
             <Slider x:Name="DeltaSlider" Maximum="60" SmallChange="1" Minimum="1"  IsSnapToTickEnabled="True"></Slider>
         </Grid>
 
-        <StackPanel Grid.Row="6"
-                Grid.ColumnSpan="2"
+
+        <Grid Grid.Row="5"
+          Grid.Column="1"
+          Grid.ColumnSpan="2">
+            <Label Content="Vitesse du TimeLapse :" FontWeight="Bold"></Label>
+        </Grid>
+        <Grid Grid.Row="5"
+          Grid.Column="3"
+          Grid.ColumnSpan="2">
+            <Label Content="{Binding ElementName=WaitTime,Path=Value}"></Label>
+        </Grid>
+
+        <Grid Grid.Row="6"
+          Grid.Column="1"
+          Grid.ColumnSpan="3">
+            <Slider x:Name="WaitTime" Maximum="1000" SmallChange="1" Minimum="1"  IsSnapToTickEnabled="True"></Slider>
+        </Grid>
+
+
+        <StackPanel Grid.Row="7" Grid.Column="1"
+                Grid.ColumnSpan="3"
                 Orientation="Vertical">
             <Button Click="DoPlayTimelapse">Lancer timelapse</Button>
         </StackPanel>

@@ -16,6 +16,15 @@ namespace SmartHome
         public int id { get; set; }
         public string name { get; set; }
         public ObservableCollection<Capteur> capteurList { get; set; }
+        public string _concentrationC02 { get; set; }
+        public string concentrationC02
+        {
+            get { return _concentrationC02; }
+            set
+            {
+                _concentrationC02 = value; NotifyPropertyChanged();
+            }
+        }
 
         /*
         private string _activatedCapteur;
@@ -32,6 +41,7 @@ namespace SmartHome
         public Lieu()
         {
             this.capteurList = new ObservableCollection<Capteur>();
+            _concentrationC02 = "Présence : Capteur Non Existant ";
             //this.activatedCapteur = "";
         }
 
@@ -40,6 +50,7 @@ namespace SmartHome
             if (other == null) return false;
             return (this.name.Equals(other.name));
         }
+
 
         private void NotifyPropertyChanged([CallerMemberName] String propertyName = "")
         {

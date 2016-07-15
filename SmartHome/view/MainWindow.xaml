@@ -113,9 +113,10 @@
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
                             <RowDefinition Height="Auto" />
+                            
                         </Grid.RowDefinitions>
 
-                        <Button Content="Lancer timelapse" Grid.Row="0" Click="timeLapse" />
+                        <Button Content="{Binding timeLaspeDateNow.dateTimeLapse}" Grid.Row="0" Click="timeLapse" />
 
                         <ListBox ItemsSource="{Binding netatmoData.locationList}" HorizontalContentAlignment="Stretch" Grid.Row="1">
                             <ListBox.ItemsPanel>
@@ -144,6 +145,7 @@
                                                 </DataTemplate>
                                             </ListBox.ItemTemplate>
                                         </ListBox>
+                                        <Label  Content="{Binding concentrationC02}" />
                                     </StackPanel>
                                 </DataTemplate>
                             </ListBox.ItemTemplate>
