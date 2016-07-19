@@ -179,7 +179,7 @@ namespace SmartHome
             {
                 Thread.CurrentThread.IsBackground = true;
 
-                this.model.playTimeLapse(this.model.selectedDate, interval, delta, waitTime);
+            this.model.playTimeLapse(this.model.selectedDate, this.model.selectedDateEnd, interval, delta, waitTime);
 
             }).Start();
         }

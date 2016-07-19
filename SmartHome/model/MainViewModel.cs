@@ -28,9 +28,11 @@ namespace SmartHome
             this.oxyplotgraph = new OxyPlotGraph();
         }
 
-        public void playTimeLapse(DateTime snapDay, int interval, int delta, int waitTime)
+        public void playTimeLapse(DateTime snapDay, DateTime snapEnd, int interval, int delta, int waitTime)
         {
-            var tld = this.netatmoData.getTimeLapsDico(snapDay, snapDay.Add(new TimeSpan(24,0,0)));
+            snapEnd = snapEnd.AddDays(1);
+            snapEnd = new DateTime(snapEnd.Year, snapEnd.Month, snapEnd.Day, 0, 0, 0);
+            var tld = this.netatmoData.getTimeLapsDico(snapDay, snapEnd);
             var timelapseTest = new TimeLapse(tld);
             Dictionary<string, Mesure> snap = new Dictionary<string, Mesure>();
             while(true)
