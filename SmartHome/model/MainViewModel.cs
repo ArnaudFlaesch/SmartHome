@@ -37,7 +37,7 @@ namespace SmartHome
             Dictionary<string, Mesure> snap = new Dictionary<string, Mesure>();
             while(true)
             {
-                snap = timelapseTest.executeTimeLapse(tld, new TimeSpan(0, 0, interval, 0), new TimeSpan(0, 0, delta, 0), snapDay.Add(new TimeSpan(24, 0, 0)), true);
+                snap = timelapseTest.executeTimeLapse(tld, new TimeSpan(0, 0, interval, 0), new TimeSpan(0, 0, delta, 0), snapEnd, true);
                 if (snap == null)
                     break;
                 foreach (var lieu in netatmoData.locationList)
