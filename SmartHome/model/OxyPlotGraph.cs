@@ -14,6 +14,7 @@ namespace SmartHome
 {
     public class OxyPlotGraph : PlotModel
     {
+        public int graphMode { get; set; }
 
         public OxyPlotGraph()
         {
@@ -23,6 +24,7 @@ namespace SmartHome
 
         public void createDateGraph()
         {
+            this.graphMode = 1;
             this.Axes.Clear();
             this.Axes.Add(new DateTimeAxis { Position = AxisPosition.Bottom, StringFormat = "HH:mm", IntervalType = DateTimeIntervalType.Hours });
             this.Axes.Add(new LinearAxis { Position = AxisPosition.Left });
@@ -31,15 +33,16 @@ namespace SmartHome
 
         public void createBarGraph()
         {
+            this.graphMode = 2;
             this.Axes.Clear();
-            //this.Axes.Add(new DateTimeAxis { Position = AxisPosition.Bottom, StringFormat = "HH:mm", IntervalType = DateTimeIntervalType.Hours });
+            this.Axes.Add(new CategoryAxis { Position = AxisPosition.Bottom });
             this.Axes.Add(new LinearAxis { Position = AxisPosition.Left });
             this.InvalidatePlot(true);
         }
 
-        public void addMesuresFromCapteur(Capteur capteur, DateTime selectedDate, int amplitude)
+        public void addMesuresFromCapteur(Capteur capteur, DateTime selectedDate, DateTime end, int amplitude)
         {
-            DateTime end = selectedDate.AddDays(1);
+            end = end.AddDays(1);
             end = new DateTime(end.Year, end.Month, end.Day, 0, 0, 0);
             List<Mesure> mesures = capteur.mesureList.FindAll(mesure => mesure.date >= selectedDate && mesure.date < end);
             mesures.ForEach(x => x.value = x.initial_value);
@@ -53,6 +56,21 @@ namespace SmartHome
                 serie.Points.Add(new DataPoint(DateTimeAxis.ToDouble(mesure.date), mesure.value));
             }
             this.Series.Add(serie);
+        }
+
+        public void addBarDataFromCapteur(Capteur capteur, DateTime selectedDate, DateTime end)
+        {
+            end = end.AddDays(1);
+            end = new DateTime(end.Year, end.Month, end.Day, 0, 0, 0);
+
+            List<Mesure> mesures = capteur.mesureList.FindAll(mesure => mesure.date >= selectedDate && mesure.date < end);
+            if (mesures.Count > 0)
+            {
+                ColumnSeries serie = new ColumnSeries { Title = capteur.lieu };
+                Mesure mesureMax = mesures.OrderByDescending(mesure => mesure.value).First();
+                serie.Items.Add(new ColumnItem(mesureMax.value));
+                this.Series.Add(serie);
+            }
         }
 
         public void ajouteSeuil(string name, int value, Color seuilColor)

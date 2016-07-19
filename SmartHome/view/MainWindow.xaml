@@ -51,17 +51,18 @@
         <Grid Name="RightGrid" Grid.Column="2">
             <Grid.RowDefinitions>
                 <RowDefinition Height="3.5*" />
-                <RowDefinition Height="0.5*" />
-                <RowDefinition Height="0.5*" />
-                <RowDefinition Height="0.5*" />
-                <RowDefinition Height="0.5*" />
-                <RowDefinition Height="0.5*" />
                 <RowDefinition Height="3.5*" />
+                <RowDefinition Height="0.5*" />
+                <RowDefinition Height="0.5*" />
+                <RowDefinition Height="0.5*" />
+                <RowDefinition Height="0.5*" />
+                <RowDefinition Height="0.5*" />
             </Grid.RowDefinitions>
 
-            <Calendar DisplayDate="{Binding selectedDateStart}" DisplayDateStart="{Binding netatmoData.start}" DisplayDateEnd="{Binding netatmoData.end}" SelectedDatesChanged="dateHasChanged" />
+            <Calendar DisplayDate="{Binding selectedDate}" DisplayDateStart="{Binding netatmoData.start}" DisplayDateEnd="{Binding netatmoData.end}" SelectedDatesChanged="dateHasChanged" />
+            <Calendar Name="EndCalendar" DisplayDate="{Binding selectedDateEnd}" DisplayDateStart="{Binding selectedDate}" DisplayDateEnd="{Binding netatmoData.end}" SelectedDatesChanged="dateEndHasChanged" Grid.Row="1" />
 
-            <Grid Grid.Row="1">
+            <Grid Grid.Row="2">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*" />
                     <RowDefinition Height="*" />
@@ -81,11 +82,10 @@
                 <Button Content="Enlever tous les seuils" Click="clearSeuils" Grid.ColumnSpan="2" Grid.Row="4" />
             </Grid>
                 
-            <Label Content="Lissage de courbe" Grid.Row="2" />
-            <Slider Name="AmplitudeSlider" Grid.Row="3" Maximum="50" SmallChange="1" Value="10" Minimum="1" ValueChanged="OnAmplitudeChange" />
+            <Label Content="Lissage de courbe" Grid.Row="3" />
+            <Slider Name="AmplitudeSlider" Grid.Row="4" Maximum="50" SmallChange="1" Value="10" Minimum="1" ValueChanged="OnAmplitudeChange" />
 
-
-            <Grid Grid.Row="4">
+            <Grid Grid.Row="5">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="*" />
@@ -96,7 +96,14 @@
                 <Button Content="Export PNG" Click="exportPNG" Grid.Column="1" />
                 <Button Content="Export PDF" Grid.Column="2" Click="exportPDF" />
             </Grid>
-            <Label Content=" " Grid.Row="5" />
+
+            <ComboBox SelectionChanged="onSelectedCaptorTypeChanged" Grid.Row="6">
+                <ComboBoxItem Content="Co2"  />
+                <ComboBoxItem Content="Humidité" />
+                <ComboBoxItem Content="Temperature" />
+                <ComboBoxItem Content="Bruit" />
+                <ComboBoxItem Content="Pression" />
+            </ComboBox>
         </Grid>
         
         <DockPanel Grid.ColumnSpan="2">

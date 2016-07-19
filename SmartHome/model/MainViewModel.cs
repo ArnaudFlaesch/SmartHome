@@ -11,6 +11,8 @@ namespace SmartHome
     {
         public string NameApp { get; set; }
         public DateTime selectedDate { get; set; }
+        public DateTime selectedDateEnd { get; set; }
+        public string selectedTypeCaptor { get; set; }
         public OxyPlotGraph oxyplotgraph { get; set; }
         public NetatmoData netatmoData { get; set; }
         public DateTimeLapse timeLaspeDateNow { get; set; }
@@ -22,6 +24,7 @@ namespace SmartHome
             this.timeLaspeDateNow = new DateTimeLapse();
             this.netatmoData = new NetatmoData();
             this.selectedDate = netatmoData.start;
+            this.selectedDateEnd = netatmoData.start;
             this.oxyplotgraph = new OxyPlotGraph();
         }
 

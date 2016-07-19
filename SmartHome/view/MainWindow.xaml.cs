@@ -20,7 +20,6 @@ namespace SmartHome
     {
         private double defaultSliderValue = 10;
         public MainViewModel model { get; set; }
-        public ImageBrush myImage { get; set; }
 
         public MainWindow()
         {
@@ -35,9 +34,33 @@ namespace SmartHome
         private void dateHasChanged(object sender, SelectionChangedEventArgs e)
         {
             this.model.selectedDate = (DateTime)((Calendar)sender).SelectedDate;
-            this.refreshGraph();
+            EndCalendar.DisplayDateStart = this.model.selectedDate;
+            if (this.model.selectedDate > this.model.selectedDateEnd)
+            {
+                EndCalendar.DisplayDate = this.model.selectedDate;
+                this.model.selectedDateEnd = this.model.selectedDate;
+            }
+            this.refresh();
         }
-        
+
+        private void dateEndHasChanged(object sender, SelectionChangedEventArgs e)
+        {
+            this.model.selectedDateEnd = (DateTime)((Calendar)sender).SelectedDate;
+            this.refresh();
+        }
+
+        private void refresh()
+        {
+            if (this.model.oxyplotgraph.graphMode == 1)
+            {
+                this.refreshGraph();
+            }
+            else if (this.model.oxyplotgraph.graphMode == 2)
+            {
+                this.refreshBarGraph();
+            }
+        }
+
         private void checkCaptor(object sender, RoutedEventArgs e)
         {
             this.refreshGraph();
@@ -53,6 +76,7 @@ namespace SmartHome
         private void refreshGraph()
         {
             this.model.oxyplotgraph.Series.Clear();
+            this.model.oxyplotgraph.createDateGraph();
             List<Capteur> capteurList = new List<Capteur>();
             foreach (Lieu lieu in this.model.netatmoData.locationList)
             {
@@ -60,7 +84,7 @@ namespace SmartHome
                 {
                     if (capteur.isActivated)
                     {
-                        this.model.oxyplotgraph.addMesuresFromCapteur(capteur, this.model.selectedDate, (int)this.AmplitudeSlider.Value);
+                        this.model.oxyplotgraph.addMesuresFromCapteur(capteur, this.model.selectedDate, this.model.selectedDateEnd, (int)this.AmplitudeSlider.Value);
                     }
                 }
             }
@@ -78,6 +102,30 @@ namespace SmartHome
         private void OnAmplitudeChange(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             this.refreshGraph();
+        }
+
+        private void onSelectedCaptorTypeChanged(object sender, RoutedEventArgs e)
+        {
+            this.model.selectedTypeCaptor = ((ComboBoxItem)((ComboBox)sender).SelectedItem).Content.ToString();
+            this.refreshBarGraph();
+        }
+
+        private void refreshBarGraph()
+        {
+            this.model.oxyplotgraph.Series.Clear();
+            this.model.oxyplotgraph.createBarGraph();
+            List<Capteur> capteurList = new List<Capteur>();
+            foreach (Lieu lieu in this.model.netatmoData.locationList)
+            {
+                foreach (Capteur capteur in lieu.capteurList)
+                {
+                    if (capteur.grandeurNom.Equals(this.model.selectedTypeCaptor))
+                    {
+                        this.model.oxyplotgraph.addBarDataFromCapteur(capteur, this.model.selectedDate, this.model.selectedDateEnd);
+                    }
+                }
+            }
+            this.model.oxyplotgraph.InvalidatePlot(true);
         }
 
         private void exportPNG(object sender, RoutedEventArgs e)
