@@ -1,2 +1,5 @@
-SmartHome_Projet/obj/
-SmartHome_Projet/bin/
+SmartHome/obj/
+SmartHome/bin/
+SmartHome.Tests/bin/
+SmartHome.Tests/obj/
+TestResults/
